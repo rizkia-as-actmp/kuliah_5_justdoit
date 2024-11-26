@@ -22,8 +22,8 @@ migrate_working_dir/
 #.vscode/
 
 # Pocketbase
-pb/pocketbase
-pb/*.md
+pb/*
+!pb/pb_hooks
 
 # Flutter/Dart/Pub related
 **/doc/api/
