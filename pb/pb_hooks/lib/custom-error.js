@@ -1,11 +1,14 @@
-function FailError(msg = "", code = 500, detail = null) {
-  this.message = msg;
-  this.code = code;
-  this.detail = detail;
+// class FailError saya buat untuk memudahkan menghandle error kedepannya
+class FailError extends Error {
+  constructor(msg = "", code = 500, detail = null) {
+    super(msg);
+    this.code = code; // field optional untuk menyimpan https status code 
+    this.detail = detail; // field optional jika saya perlu untuk menyimpan detail mengenai error bukan cuma message saja
+
+    this.name = this.constructor.name;
+  }
 }
 
-// Inherit from Error
-FailError.prototype = new Error();
-
-// Export the FailError function using CommonJS syntax
-module.exports = { FailError };
+// "Currently only CommonJS (CJS) modules are supported" 
+// ~ pocketbase documentation
+module.exports = { FailError }; 
