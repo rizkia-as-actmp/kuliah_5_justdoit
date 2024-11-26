@@ -1,13 +1,17 @@
+const { FailError } = require("./custom-error");
+
+// membuat signature menggunakan algoritma hs256 untuk mengamankan resources yang saya kirim ke API tripay ditengah perjalanannya
 function closedPaymentSignature(merchantRef, amount) {
-  const tripayPrivateKey = $os.getenv("TRIPAY_PRIVATE_KEY")
+  const tripayPrivateKey = $os.getenv("TRIPAY_PRIVATE_KEY") // cara mendapatkan environtment variable didalam extend function pocketbase 
   const tripayMerchantCode = $os.getenv("TRIPAY_MERCHANT_CODE")
 
   const data = tripayMerchantCode + merchantRef + amount;
   const signature = $security.hs256(data, tripayPrivateKey)
-
+  return signature
 }
 
-export async function closedTransaction(
+// function untuk membuat request closed transaction ke tripay API payment gateway 
+async function closedTransaction(
   method,
   merchant_ref,
   amount,
@@ -37,25 +41,21 @@ export async function closedTransaction(
     signature: signature,
   };
 
-
-  return ""
-
-
-  const tpResponse = await fetch(`${tripayBaseURL}/transaction/create`, {
+  // $http adalah object global helper yang tersedia didalam extend function pocketbase untuk melakukan request ke external services
+  let tpResponse = $http.send({
+    url: `${tripayBaseURL}/transaction/create`,
     method: "POST",
+    body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${tripayApiKey}`,
     },
-    body: JSON.stringify(payload),
+    timeout: 120,
   })
-    .then((res) => res.json())
-    .then((json) => json);
+  tpResponse = tpResponse.json
 
   if (!tpResponse.success) {
-    throw new FailError(
-      `failed to create payment transaction: ${tpResponse.message}`
-    );
+    throw new FailError(`failed to create payment transaction: ${tpResponse.message}`)
   }
 
   const data = tpResponse.data
@@ -63,6 +63,5 @@ export async function closedTransaction(
 }
 
 module.exports = {
-
+  closedTransaction
 }
-
