@@ -14,6 +14,7 @@ onMailerRecordVerificationSend(async (e) => {
   // $app adalah instance dari pocketbase yang berjalan yang tersedia secara global pada seluruh file yang berextensi .pb.js 
   const userRecord = $app.findAuthRecordByToken(e.meta.token) // mencari authRecord dalam konteks ini adalah record user menggunakan token jwt nya
   const paymentMethod = $os.getenv("PAYMENT_METHOD")
+  const pocketbaseBaseUrl = $os.getenv("POCKETBASE_BASE_URL")
   const regFee = parseInt($os.getenv("USER_REGISTRATION_FEE"))
   const regCode = random.generateRegistrationCode()
 
@@ -24,7 +25,6 @@ onMailerRecordVerificationSend(async (e) => {
       quantity: 1
     }
   ]
-
   let tpResponse
   try {
     tpResponse = await tp.closedTransaction(
@@ -34,7 +34,7 @@ onMailerRecordVerificationSend(async (e) => {
       userRecord.getString("name"),
       userRecord.getString("email"),
       orderItems,
-      "",
+      `${pocketbaseBaseUrl}/extend/api/collections/users/update-verification-callback`,
       ""
     )
 
@@ -43,22 +43,24 @@ onMailerRecordVerificationSend(async (e) => {
       console.log(JSON.stringify(error.message))
       $app.logger().error(JSON.stringify(error.message)) // $app.logger() digunakan untuk menulis logs yang nantinya bisa dibaca di dashboard admin pocketbase
     }
+    console.log(JSON.stringify(error))
+    $app.logger().error(JSON.stringify(error))
     throw new fail.FailError(error)
   }
 
-  const regCol = $app.findCollectionByNameOrId("registrations") // mencari data collection untuk collection registratins
-
   // cara membuat record baru di pocketbase extend function
   // disini saya mau membuat record registrasi untuk menyimpan token verifikasi
+  const regCol = $app.findCollectionByNameOrId("registrations") // mencari data collection untuk collection registratins
   const regRecord = new Record(regCol)
   regRecord.set("registration_code", regCode)
   regRecord.set("verification_token", e.meta.token)
+  regRecord.set("user", userRecord.id)
   $app.save(regRecord);
 
   // melakukan overrride pada email HTML yang dikirim ke user
   e.message.html = email.registrationEmail(tpResponse.amount, tpResponse.qr_url, e.mailer.username)
   // melakukan overrride pada token yang akan dikirim ke user
-  // disini saya tidak ingin token tersebut langsung dikirim keuser
+  // // disini saya tidak ingin token tersebut langsung dikirim keuser
   e.meta.token = ""
   // melakukan overrride subject email
   e.message.subject = "Aktivasi Akun - Segera Selesaikan Pembayaran"
