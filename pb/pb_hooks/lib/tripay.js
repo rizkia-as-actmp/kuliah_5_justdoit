@@ -41,21 +41,30 @@ async function closedTransaction(
     signature: signature,
   };
 
-  // $http adalah object global helper yang tersedia didalam extend function pocketbase untuk melakukan request ke external services
-  let tpResponse = $http.send({
-    url: `${tripayBaseURL}/transaction/create`,
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${tripayApiKey}`,
-    },
-    timeout: 120,
-  })
-  tpResponse = tpResponse.json
+  let tpResponse
+  try {
+    // $http adalah object global helper yang tersedia didalam extend function pocketbase untuk melakukan request ke external services
+    console.log(JSON.stringify("prepare to create close transaction"))
+    tpResponse = $http.send({
+      url: `${tripayBaseURL}/transaction/create`,
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tripayApiKey}`,
+      },
+      timeout: 120,
+    })
+    console.log(JSON.stringify("close transaction was created"))
+    tpResponse = tpResponse.json
 
-  if (!tpResponse.success) {
-    throw new FailError(`failed to create payment transaction: ${tpResponse.message}`)
+    if (!tpResponse.success) {
+      throw new FailError(`failed to create payment transaction: ${tpResponse.message}`)
+    }
+  } catch (error) {
+    console.log(JSON.stringify(error))
+    $app.logger().error(JSON.stringify(error))
+    throw new fail.FailError(error)
   }
 
   const data = tpResponse.data
