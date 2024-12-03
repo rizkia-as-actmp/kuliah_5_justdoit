@@ -24,6 +24,7 @@ migrate_working_dir/
 # Pocketbase
 pb/*
 !pb/pb_hooks
+!pb/Makefile
 
 # Flutter/Dart/Pub related
 **/doc/api/
