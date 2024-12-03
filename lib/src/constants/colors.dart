@@ -1,0 +1,14 @@
+import 'package:flutter/material.dart';
+
+class DefinedTheme {
+  static const Color background = Color(0xFFF9FAFA);
+  static const Color onBackground = Color(0xFF314748);
+  static const Color primary = Color(0xFF719191);
+  static const Color primary50 = Color(0xFFE9F0F0);
+  static const Color onPrimary = Color(0xFFFFFFFF);
+  static const Color secondary = Color(0xFF917191);
+  static const Color onSecondary = Color(0xFFFFFFFF);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color onSurface = Color(0xFF000000);
+  static const Color greyish = Color(0xFFBBBBBB);
+}
