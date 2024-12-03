@@ -114,7 +114,7 @@ function registrationEmail(amount, qrURI, mailtoAddress) {
             </div>
         </div>
         <div class="footer">
-            © 2024 Aplikasi Anda. Semua Hak Dilindungi.
+            © 2024 JustDoIT. Semua Hak Dilindungi.
         </div>
     </div>
 </body>
@@ -245,7 +245,116 @@ function paymentStatusEmail(status, mailtoAddress) {
             </div>
         </div>
         <div class="footer">
-            © 2024 Aplikasi Anda. Semua Hak Dilindungi.
+            © 2024 JustDoIT. Semua Hak Dilindungi.
+        </div>
+    </div>
+</body>
+</html>
+`;
+}
+
+function otpEmail(otpCode, mailtoAddress) {
+  return `
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kode OTP Anda</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F8F9FA;
+            color: #333333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #3B3F6C;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+        }
+        .instructions {
+            text-align: center;
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.6;
+        }
+        .otp-section {
+            background-color: #EAF4FF;
+            color: #3B3F6C;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .button {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button a {
+            display: inline-block;
+            background-color: #3B3F6C;
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button a:hover {
+            background-color: #2C2F54;
+        }
+        .footer {
+            background-color: #F0F0F0;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            Kode OTP Anda
+        </div>
+        <div class="content">
+            <p class="instructions">
+                Berikut adalah kode OTP (One Time Password) Anda untuk verifikasi:
+            </p>
+            <div class="otp-section">
+                ${otpCode}
+            </div>
+            <p class="instructions">
+                Masukkan kode OTP ini ke dalam aplikasi untuk melanjutkan. Kode ini berlaku selama 10 menit.
+            </p>
+            <p class="instructions">
+                Jika Anda tidak meminta kode ini, abaikan email ini. Jika Anda membutuhkan bantuan, hubungi tim kami melalui tombol di bawah ini.
+            </p>
+            <div class="button">
+                <a href="mailto:${mailtoAddress}">Hubungi Dukungan</a>
+            </div>
+        </div>
+        <div class="footer">
+            © 2024 JustDoIT. Semua Hak Dilindungi.
         </div>
     </div>
 </body>
@@ -254,6 +363,11 @@ function paymentStatusEmail(status, mailtoAddress) {
 }
 
 module.exports = {
+  otpEmail,
+};
+
+module.exports = {
   paymentStatusEmail,
-  registrationEmail
+  registrationEmail,
+  otpEmail
 }
