@@ -2,19 +2,24 @@ ping:
 	curl -X GET http://127.0.0.1:8090/hello \
 
 
-reqotp:
-	curl -X POST http://localhost:8090/api/collections/users/request-otp \
+login:
+	curl -X POST http://localhost:8090/api/collections/users/auth-with-password \
 		-H "Content-Type: application/json" \
-		-d '{"email": "rizkia.as.pac@gmail.com"}'
+		-d '{"identity": "rizkia.as.pac@gmail.com", "password": "21204444"}'
 
 reqotp:
 	curl -X POST http://localhost:8090/api/collections/users/request-otp \
 		-H "Content-Type: application/json" \
 		-d '{"email": "rizkia.as.pac@gmail.com"}'
 
+
+passotp:
+	curl -X POST http://localhost:8090/api/collections/users/auth-with-otp \
+		-H "Content-Type: application/json" \
+		-d '{"otpId": "4xg40ua3mltj29y", "password": "3328"}'
 
 user:
-	curl -X POST http://127.0.0.1:8090/api/collections/usegs/gecords \
+	curl -X POST http://127.0.0.1:8090/api/collections/users/gecords \
 		-H "Content-Type: application/json" \
 		-d '{"email": "rizkia.as.pac@gmail.com", "name" : "rizkia", "password": "21204444", "passwordConfirm" : "21204444"}'
 
