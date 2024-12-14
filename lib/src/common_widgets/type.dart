@@ -114,15 +114,19 @@ class HeadingThree extends StatelessWidget {
     this.color = DefinedTheme.onBackground,
   });
 
+  TextStyle getTextStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: 16,
+      fontWeight: FontWeight.w900,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontSize: 16,
-        fontWeight: FontWeight.w900,
-      ),
+      style: getTextStyle(),
     );
   }
 }

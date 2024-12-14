@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
+import 'package:justdoit/src/constants/colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final String labelText;
+  final bool disabled;
 
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.labelText,
+    this.disabled = false,
   });
 
   String? fieldValidator(dynamic value) {
@@ -26,6 +29,7 @@ class CustomTextField extends StatelessWidget {
       const BorderRadius.all(Radius.circular(10));
   final Color _borderColor = const Color(0xFF314748);
   final Color _enabledBorderColor = const Color(0xFF314748);
+  final Color _disabledBorderColor = DefinedTheme.greyish;
   final Color _errorBorderColor = const Color(0xFF314748);
 
   @override
@@ -33,9 +37,13 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText),
+        Text(labelText,
+            style: TextStyle(
+              color: disabled ? DefinedTheme.greyish : DefinedTheme.black,
+            )),
         smallVSizedBox,
         TextFormField(
+          enabled: !disabled,
           autofocus: true,
           controller: controller,
           decoration: InputDecoration(
@@ -51,6 +59,13 @@ class CustomTextField extends StatelessWidget {
               borderSide: BorderSide(
                 width: _borderWidth,
                 color: _enabledBorderColor,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: _borderRadius,
+              borderSide: BorderSide(
+                width: _borderWidth,
+                color: _disabledBorderColor,
               ),
             ),
             errorBorder: OutlineInputBorder(
