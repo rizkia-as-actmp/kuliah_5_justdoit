@@ -11,4 +11,7 @@ class DefinedTheme {
   static const Color surface = Color(0xFFFFFFFF);
   static const Color onSurface = Color(0xFF000000);
   static const Color greyish = Color(0xFFBBBBBB);
+  static const Color error = Color(0xFFcb8282);
+  static const Color errorSurface = Color(0xFFFFF6F6);
+  static const Color black = Color(0xFF000000);
 }
