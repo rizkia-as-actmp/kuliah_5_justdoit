@@ -139,7 +139,7 @@ class _RegisterUserFormState extends State<_RegisterUserForm> {
               extraBigVSizedBox,
               CustomWideButton(
                 labelText: "register",
-                onSubmit: _onSubmit,
+                onPressed: _onSubmit,
               ),
               mediumVSizedBox,
               const Center(child: Text("Or")),
