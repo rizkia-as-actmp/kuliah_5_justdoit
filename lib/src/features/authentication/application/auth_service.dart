@@ -1,6 +1,6 @@
 import 'package:justdoit/src/features/authentication/data/auth_repository.dart';
 import 'package:justdoit/src/features/authentication/data/shared_preferences_repository.dart';
-import 'package:justdoit/src/utils/custom_exception.dart';
+import 'package:justdoit/src/exceptions/custom_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth_service.g.dart';
 

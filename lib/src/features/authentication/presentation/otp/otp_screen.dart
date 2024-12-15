@@ -10,7 +10,7 @@ import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
 import 'package:justdoit/src/constants/colors.dart';
 import 'package:justdoit/src/features/authentication/presentation/otp/otp_controller.dart';
-import 'package:justdoit/src/utils/custom_exception.dart';
+import 'package:justdoit/src/exceptions/custom_exception.dart';
 
 class InputOtpScreen extends StatelessWidget {
   const InputOtpScreen({super.key});

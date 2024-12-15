@@ -5,7 +5,7 @@ import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
 import 'package:justdoit/src/constants/colors.dart';
-import 'package:justdoit/src/utils/custom_exception.dart';
+import 'package:justdoit/src/exceptions/custom_exception.dart';
 
 showExceptionDialog(BuildContext context, error) {
   late CustomExceptionObject customError;

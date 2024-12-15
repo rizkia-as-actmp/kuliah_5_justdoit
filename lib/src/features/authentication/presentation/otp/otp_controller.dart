@@ -1,5 +1,5 @@
 import 'package:justdoit/src/features/authentication/application/auth_service.dart';
-import 'package:justdoit/src/utils/custom_exception.dart';
+import 'package:justdoit/src/exceptions/custom_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'otp_controller.g.dart';
 

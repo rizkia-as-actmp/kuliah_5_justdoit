@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:justdoit/src/features/authentication/domain/auth.dart';
 import 'package:justdoit/src/interfaces/api_uri_builder.dart';
 import 'package:justdoit/src/interfaces/http_auth_repository.dart';
-import 'package:justdoit/src/utils/custom_exception.dart';
-import 'package:justdoit/src/utils/pocketbase_api_uri_builder.dart';
+import 'package:justdoit/src/exceptions/custom_exception.dart';
+import 'package:justdoit/src/infrastructure/pocketbase_api_uri_builder.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth_repository.g.dart';
 
