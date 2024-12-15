@@ -4,6 +4,7 @@ import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/common_widgets/custom_text_button.dart';
 import 'package:justdoit/src/common_widgets/custom_text_field.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
+import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
 import 'package:justdoit/src/features/authentication/presentation/register/login_controller.dart';
 
@@ -16,7 +17,7 @@ class LoginUserScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          HeadingTwo(data: "Welcome Back"),
+          HeadingTwo(data: "Login"),
           extraBigVSizedBox,
           const _LoginUserForm(),
         ],
@@ -66,10 +67,6 @@ class _LoginUserFormState extends ConsumerState<_LoginUserForm> {
       if (isSuccess) {
         Navigator.pushReplacementNamed(context, '/verify-otp');
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        //SnackBar(content: Text('$email - $password')),
-        SnackBar(content: Text('status login : $isSuccess')),
-      );
     }
   }
 
@@ -77,6 +74,12 @@ class _LoginUserFormState extends ConsumerState<_LoginUserForm> {
   Widget build(BuildContext context) {
     // state disini digunakan hanya untuk membaca state pada loginControllerProvider
     final state = ref.watch(loginControllerProvider);
+
+    if (state is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showExceptionDialog(context, state.error);
+      });
+    }
 
     return FocusScope(
       node: _focusNode,
@@ -88,41 +91,45 @@ class _LoginUserFormState extends ConsumerState<_LoginUserForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                color: Colors.cyan,
-                child: switch (state) {
-                  //AsyncData(:final value) => Text('isi kepala: $value'),
-                  AsyncError(:final error) => Text('Error: $error'),
-                  _ => Center(child: Text('tes ${state.isLoading}')),
-                },
-              ),
-              //Container(
-              //  color: Colors.cyan,
-              //  child: switch (state2) {
-              //    AsyncError(:final error) => Text('Error: $error'),
-              //    _ => Center(child: Text('tes ${state.isLoading}')),
-              //  },
-              //),
+              // Container(
+              //   color: Colors.cyan,
+              //   child: switch (state) {
+              //     //AsyncData(:final value) => Text('isi kepala: $value'),
+              //     //AsyncError(:final error) => Text('Error: $error'),
+              //     _ => Center(child: Text('tes ${state.isLoading}')),
+              //   },
+              // ),
               CustomTextField(
                 controller: _emailController,
                 labelText: "Email address",
-                hintText: "Masukkan sesuatu",
+                hintText: "your.account@mail.com",
+                disabled: state.isLoading,
               ),
               mediumVSizedBox,
               CustomTextField(
                 controller: _passwordController,
                 labelText: "Password",
-                hintText: "Masukkan sesuatu",
+                hintText: "super_secret_password",
+                disabled: state.isLoading,
+                obscureText: true,
               ),
               extraBigVSizedBox,
               CustomWideButton(
                 labelText: "Login",
                 onPressed: _onSubmit,
+                disabled: state.isLoading,
               ),
               mediumVSizedBox,
               const Center(child: Text("Or")),
               mediumVSizedBox,
-              const Center(child: CustomTextButton(labelText: "Register"))
+              Center(
+                  child: CustomTextButton(
+                labelText: "Register",
+                disabled: state.isLoading,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/register-user');
+                },
+              ))
             ],
           ),
         ),
