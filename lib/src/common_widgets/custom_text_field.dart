@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final String labelText;
   final bool disabled;
+  final bool obscureText;
 
   const CustomTextField({
     super.key,
@@ -14,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.labelText,
     this.disabled = false,
+    this.obscureText = false,
   });
 
   String? fieldValidator(dynamic value) {
@@ -44,6 +46,7 @@ class CustomTextField extends StatelessWidget {
         smallVSizedBox,
         TextFormField(
           enabled: !disabled,
+          obscureText: obscureText,
           autofocus: true,
           controller: controller,
           decoration: InputDecoration(
