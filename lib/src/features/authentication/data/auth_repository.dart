@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:justdoit/src/features/authentication/domain/auth.dart';
+import 'package:justdoit/src/features/authentication/domain/user.dart';
 import 'package:justdoit/src/interfaces/api_uri_builder.dart';
 import 'package:justdoit/src/interfaces/http_auth_repository.dart';
 import 'package:justdoit/src/exceptions/custom_exception.dart';
@@ -18,6 +19,29 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
 
   @override
   final ApiUriBuilder uriBuilder;
+
+  @override
+  Future<User> registerUser(String name, String email, String password) async {
+    try {
+      Object data = {
+        'name': name.toString(),
+        'email': email.toString(),
+        'emailVisibility': true.toString(),
+        'password': password.toString(),
+        'passwordConfirm': password.toString(),
+      };
+
+      return await sendRequest<User>(
+        uri: uriBuilder.api("collections/users/records"),
+        method: "POST",
+        body: data,
+        builder: (responseData) => User.fromJson(responseData),
+      );
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "08892ec8", details: e);
+    }
+  }
 
   @override
   Future<PbAuth> authWithPassword(String email, String password) async {
@@ -53,7 +77,7 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
       );
     } catch (e) {
       if (e is CustomException) rethrow;
-      throw CustomException(id: "74fa7563", details: e);
+      throw CustomException(id: "3146c5bf", details: e);
     }
   }
 
@@ -86,8 +110,9 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
           data = jsonDecode(response.body) as Map<String, dynamic>;
           throw CustomException(
               id: "d267e93f",
-              message: response.statusCode.toString(),
-              details: data["message"]);
+              httpResponseCode: response.statusCode.toString(),
+              message: data["message"],
+              details: data["data"]);
       }
     } catch (e) {
       if (e is CustomException) rethrow;
