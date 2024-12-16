@@ -34,6 +34,7 @@ const mediumHSizedBox = SizedBox(width: DefinedSize.medium);
 const bigHSizedBox = SizedBox(width: DefinedSize.big);
 const extraBigHSizedBox = SizedBox(width: DefinedSize.extraBig);
 
+const extraSmallVSizedBox = SizedBox(height: DefinedSize.extraSmall);
 const smallVSizedBox = SizedBox(height: DefinedSize.small);
 const mediumVSizedBox = SizedBox(height: DefinedSize.medium);
 const bigVSizedBox = SizedBox(height: DefinedSize.big);
