@@ -9,12 +9,14 @@ class CustomExceptionObject {
   CustomExceptionObject({
     required this.userFactor,
     required this.id,
+    this.httpResponseCode,
     required this.message,
     required this.details,
   });
 
   final bool userFactor;
   final String id;
+  String? httpResponseCode;
   final String message;
   final Object details;
 
@@ -25,12 +27,14 @@ class CustomExceptionObject {
 class CustomException implements Exception {
   final bool userFactor;
   final String id;
+  String? httpResponseCode;
   final String message;
   final Object details;
   final String environment;
 
   CustomException({
     this.id = 'No id provided',
+    this.httpResponseCode,
     this.userFactor = false,
     this.message = 'An error occurred',
     this.details = 'No additional details',
@@ -45,14 +49,23 @@ class CustomException implements Exception {
         return 'Internal App error';
       }
     } else {
-      final exceptionJson = jsonEncode({
+      final Map<String, dynamic> exceptionMap = {
         'id': id,
         'userFactor': userFactor,
         'message': message,
-        'details': details.toString(),
-      });
+        'details': details,
+      };
 
-      return exceptionJson;
+      if (httpResponseCode != null) {
+        exceptionMap['httpResponseCode'] = httpResponseCode;
+      }
+
+      try {
+        return jsonEncode(exceptionMap);
+      } catch (_) {
+        final fallbackMap = {...exceptionMap, "details": details.toString()};
+        return jsonEncode(fallbackMap);
+      }
     }
   }
 }
