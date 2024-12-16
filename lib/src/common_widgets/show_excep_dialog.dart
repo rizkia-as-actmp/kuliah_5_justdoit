@@ -5,6 +5,7 @@ import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
 import 'package:justdoit/src/constants/colors.dart';
+import 'package:justdoit/src/constants/sizes.dart';
 import 'package:justdoit/src/exceptions/custom_exception.dart';
 
 showExceptionDialog(BuildContext context, error) {
@@ -29,39 +30,65 @@ showExceptionDialog(BuildContext context, error) {
 }
 
 class _AlertDialog extends StatelessWidget {
-  const _AlertDialog({
-    super.key,
-    required this.customError,
-  });
+  const _AlertDialog({required this.customError});
 
   final CustomExceptionObject customError;
 
   @override
   Widget build(BuildContext context) {
     String errorMessage = customError.message.toUpperCase();
-    if (_isNumber(errorMessage)) {
-      errorMessage = _getResponseMessage(errorMessage);
+    String errorHttpResponseCode =
+        _handleErrorHttpResponseCodeNullable(customError.httpResponseCode);
+
+    late String customErrorDetails;
+    try {
+      customErrorDetails =
+          _formatJson(customError.details as Map<String, dynamic>);
+    } catch (_) {
+      customErrorDetails = customError.details.toString();
     }
 
     return AlertDialog(
-      backgroundColor: DefinedTheme.errorSurface,
+      backgroundColor: DefinedTheme.errorBackground,
       title: Center(
-          child: HeadingThree(
-        data: errorMessage,
-        color: DefinedTheme.error,
-      )),
+          child: HeadingThree(data: errorMessage, color: DefinedTheme.error)),
       content: SingleChildScrollView(
         child: ListBody(
           children: [
-            Text(
-              customError.id,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10, color: DefinedTheme.error),
-            ),
+            customError.httpResponseCode != null
+                ? Center(
+                    child: Column(
+                      children: [
+                        HeadingFive(
+                            data: errorHttpResponseCode,
+                            color: DefinedTheme.error),
+                        extraSmallVSizedBox,
+                        Text(
+                          customError.id,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 10, color: DefinedTheme.error),
+                        ),
+                      ],
+                    ),
+                  )
+                : Text(
+                    customError.id,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 10, color: DefinedTheme.error),
+                  ),
             smallVSizedBox,
-            Text(
-              customError.details.toString(),
-              textAlign: TextAlign.center,
+            Container(
+              //color: DefinedTheme.errorSurface, // tidak bisa pakai color klo pakai decoration box decoration
+              padding: EdgeInsets.all(DefinedSize.extraSmall),
+              decoration: BoxDecoration(
+                color: DefinedTheme.errorSurface,
+                border: Border.all(color: DefinedTheme.greyish, width: 1),
+                borderRadius: BorderRadius.circular(DefinedSize.extraSmall),
+              ),
+              child: Flexible(
+                child: Text(customErrorDetails),
+              ),
             ),
           ],
         ),
@@ -70,7 +97,7 @@ class _AlertDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       actions: <Widget>[
         CustomWideButton(
-          labelText: "Understood",
+          labelText: "Dismiss",
           backgroundColor: DefinedTheme.error,
           onPressed: () {
             Navigator.of(context).pop();
@@ -78,6 +105,15 @@ class _AlertDialog extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+String _handleErrorHttpResponseCodeNullable(String? errorHttpResponseCode) {
+  // cek apakah  errorHttpResponseCode null atau tidak, baru cek _isNumber karna _isNumber hanya menerima String non nullable, pengecekan diawal memastikan nilai tidak null
+  if (errorHttpResponseCode != null && _isNumber(errorHttpResponseCode)) {
+    return _getResponseMessage(errorHttpResponseCode);
+  } else {
+    return "";
   }
 }
 
@@ -99,6 +135,37 @@ Map<int, String> _responseCodes = {
 };
 
 String _getResponseMessage(String code) {
-  return _responseCodes[int.parse(code)] ??
-      'Unknown Error'; // Default to 'Unknown Error' if code is not found
+  return _responseCodes[int.parse(code)] ?? 'Unknown Error';
+}
+
+String _formatJson(dynamic json, {int indent = 0}) {
+  const String indentUnit = '  '; // Indentation unit
+  final String currentIndent = indentUnit * indent;
+  if (json is Map<String, dynamic>) {
+    // Iterate through Map and format recursively
+    return json.entries.map((entry) {
+      final key = entry.key;
+      final value = entry.value;
+
+      if (value is Map || value is List) {
+        return '$currentIndent$key:\n${_formatJson(value, indent: indent + 1)}\n';
+      } else {
+        return '$currentIndent$key: $value';
+      }
+    }).join('\n');
+  } else if (json is List) {
+    // Handle Lists and format recursively
+    return json.map((value) {
+      if (value is Map || value is List) {
+        return _formatJson(value, indent: indent + 1);
+      } else {
+        return '$currentIndent- $value';
+      }
+    }).join('\n');
+  } else if (json != null) {
+    // Default case for primitive types
+    return '$currentIndent$json';
+  } else {
+    return '$currentIndent(null)';
+  }
 }
