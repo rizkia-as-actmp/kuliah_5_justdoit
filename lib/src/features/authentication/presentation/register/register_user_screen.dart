@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/common_widgets/custom_text_button.dart';
 import 'package:justdoit/src/common_widgets/custom_text_field.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
+import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
+import 'package:justdoit/src/features/authentication/presentation/register/register_controller.dart';
 
 class RegisterUserScreen extends StatelessWidget {
   const RegisterUserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // NOTE: perlu scaffold bila di main tidak ada jadi gak bisa langsung taro RegisterPendudukContents
+    // NOTE: perlu scaffold bila di main tidak ada jadi gak bisa langsung taro _RegisterUserForm
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           HeadingTwo(
-            data: "Welcome",
+            data: "Registration",
           ),
           extraBigVSizedBox,
           const _RegisterUserForm(),
@@ -26,14 +29,16 @@ class RegisterUserScreen extends StatelessWidget {
   }
 }
 
-class _RegisterUserForm extends StatefulWidget {
+class _RegisterUserForm extends ConsumerStatefulWidget {
   const _RegisterUserForm({super.key});
 
   @override
-  State<_RegisterUserForm> createState() => _RegisterUserFormState();
+  //State<_RegisterUserForm> createState() => _RegisterUserFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _RegisterUserFormState();
 }
 
-class _RegisterUserFormState extends State<_RegisterUserForm> {
+class _RegisterUserFormState extends ConsumerState<_RegisterUserForm> {
   final _formKey = GlobalKey<FormState>();
   // Define the focus node. To manage the lifecycle, create the FocusNode in
   // the initState method, and clean it up in the dispose method.
@@ -43,7 +48,6 @@ class _RegisterUserFormState extends State<_RegisterUserForm> {
   void initState() {
     super.initState();
     // Start listening to changes.
-    _nameController.addListener(_printLatestValue);
     _focusNode = FocusScopeNode();
   }
 
@@ -74,34 +78,36 @@ class _RegisterUserFormState extends State<_RegisterUserForm> {
   final _passwordConfirmController = TextEditingController();
   String get passwordConfirm => _passwordConfirmController.text;
 
-  void _printLatestValue() {
-    print('Second text field: $name (${name.characters.length})');
-  }
-
-  void _onSubmit() {
-    // showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       // Retrieve the text that the user has entered by using the
-    //       // TextEditingController.
-    //       content: Text(name),
-    //     );
-    //   },
-    // );
-
+  void _onSubmit() async {
     // Validate returns true if the form is valid, or false otherwise.
     if (_formKey.currentState!.validate()) {
-      // If the form is valid, display a snackbar. In the real world,
-      // you'd often call a server or save the information in a database.
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
-      );
+      final controller = ref.read(registerControllerProvider.notifier);
+      final user = await controller.submit(
+          name: name,
+          email: email,
+          password: password,
+          passwordConfirm: passwordConfirm);
+
+      if (user != null && mounted) {
+        // The warning occurs because BuildContext is used after an async operation, which can lead to errors if the widget is no longer mounted; fix this by checking if the widget is still mounted before using BuildContext.
+        Navigator.pushNamed(context, '/registration-complete', arguments: {
+          'name': user.name!,
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(registerControllerProvider);
+
+    if (state is AsyncError) {
+      //print(state.value);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showExceptionDialog(context, state.error);
+      });
+    }
+
     // Build a Form widget using the _formKey created above.
     return FocusScope(
       node: _focusNode,
@@ -116,36 +122,49 @@ class _RegisterUserFormState extends State<_RegisterUserForm> {
               CustomTextField(
                 controller: _nameController,
                 labelText: "Nama",
-                hintText: "Nama",
+                hintText: "nama anda",
+                disabled: state.isLoading,
               ),
               mediumVSizedBox,
               CustomTextField(
                 controller: _emailController,
                 labelText: "Email address",
-                hintText: "Masukkan sesuatu",
+                hintText: "email.anda@mail.com",
+                disabled: state.isLoading,
               ),
               mediumVSizedBox,
               CustomTextField(
                 controller: _passwordController,
                 labelText: "Password",
-                hintText: "Masukkan sesuatu",
+                hintText: "password_rahasia",
+                obscureText: true,
+                disabled: state.isLoading,
               ),
               mediumVSizedBox,
               CustomTextField(
                 controller: _passwordConfirmController,
                 labelText: "Password confirm",
-                hintText: "Masukkan sesuatu",
+                hintText: "password_rahasia",
+                obscureText: true,
+                disabled: state.isLoading,
               ),
               extraBigVSizedBox,
               CustomWideButton(
                 labelText: "register",
+                disabled: state.isLoading,
                 onPressed: _onSubmit,
               ),
               mediumVSizedBox,
-              const Center(child: Text("Or")),
+              const Center(child: Text("Og")),
               mediumVSizedBox,
-              const Center(
-                child: CustomTextButton(labelText: "Login"),
+              Center(
+                child: CustomTextButton(
+                  labelText: "Login",
+                  disabled: state.isLoading,
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                ),
               )
             ],
           ),
