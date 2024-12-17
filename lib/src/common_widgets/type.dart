@@ -1,119 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:justdoit/src/common_widgets/heading_interface.dart';
 import 'package:justdoit/src/constants/colors.dart';
 
-/// HeadingOne Widget
-///
-/// A customizable text widget for large headings.
-///
-/// **Parameters:**
-/// - `data` (required): The text to display.
-/// - `color`: The color of the text. Defaults to `DefinedTheme.onBackground`.
-///
-/// **Style:**
-/// - Font size: 32
-/// - Font weight: w900 (boldest)
-///
-/// Example usage:
-/// ```dart
-/// HeadingOne(
-///   data: 'Welcome',
-///   color: Colors.blue,
-/// )
-/// ```
-class HeadingOne extends StatelessWidget {
+class HeadingOne extends StatelessWidget implements HeadingInterface {
+  @override
   final String data;
+  @override
   Color color;
+  @override
+  TextAlign textAlign;
 
   HeadingOne({
     super.key,
     required this.data,
     this.color = DefinedTheme.onBackground,
+    this.textAlign = TextAlign.left,
   });
+
+  @override
+  TextStyle getTextStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: 32,
+      fontWeight: FontWeight.w900,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontSize: 32,
-        fontWeight: FontWeight.w900,
-      ),
+      textAlign: textAlign,
+      style: getTextStyle(),
     );
   }
 }
 
-/// HeadingTwo Widget
-///
-/// A customizable text widget for medium-large headings.
-///
-/// **Parameters:**
-/// - `data` (required): The text to display.
-/// - `color`: The color of the text. Defaults to `DefinedTheme.onBackground`.
-///
-/// **Style:**
-/// - Font size: 24
-/// - Font weight: w900 (boldest)
-///
-/// Example usage:
-/// ```dart
-/// HeadingTwo(
-///   data: 'Hello World',
-///   color: Colors.red,
-/// )
-/// ```
-class HeadingTwo extends StatelessWidget {
+class HeadingTwo extends StatelessWidget implements HeadingInterface {
+  @override
   final String data;
+  @override
   Color color;
+  @override
+  TextAlign textAlign;
 
   HeadingTwo({
     super.key,
     required this.data,
     this.color = DefinedTheme.onBackground,
+    this.textAlign = TextAlign.left,
   });
+
+  @override
+  TextStyle getTextStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: 24,
+      fontWeight: FontWeight.w900,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontSize: 24,
-        fontWeight: FontWeight.w900,
-      ),
+      textAlign: textAlign,
+      style: getTextStyle(),
     );
   }
 }
 
-/// HeadingThree Widget
-///
-/// A customizable text widget for medium-sized headings.
-///
-/// **Parameters:**
-/// - `data` (required): The text to display.
-/// - `color`: The color of the text. Defaults to `DefinedTheme.onBackground`.
-///
-/// **Style:**
-/// - Font size: 16
-/// - Font weight: w900 (boldest)
-///
-/// Example usage:
-/// ```dart
-/// HeadingThree(
-///   data: 'Section Title',
-///   color: Colors.green,
-/// )
-/// ```
-class HeadingThree extends StatelessWidget {
+class HeadingThree extends StatelessWidget implements HeadingInterface {
+  @override
   final String data;
+  @override
   Color color;
+  @override
+  TextAlign textAlign;
 
   HeadingThree({
     super.key,
     required this.data,
     this.color = DefinedTheme.onBackground,
+    this.textAlign = TextAlign.left,
   });
 
+  @override
   TextStyle getTextStyle() {
     return TextStyle(
       color: color,
@@ -126,93 +98,108 @@ class HeadingThree extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       data,
+      textAlign: textAlign,
       style: getTextStyle(),
     );
   }
 }
 
-/// HeadingFour Widget
-///
-/// A customizable text widget for small headings or subheadings.
-///
-/// **Parameters:**
-/// - `data` (required): The text to display.
-/// - `color`: The color of the text. Defaults to `DefinedTheme.onBackground`.
-///
-/// **Style:**
-/// - Font size: 16
-/// - Font weight: Normal
-///
-/// Example usage:
-/// ```dart
-/// HeadingFour(
-///   data: 'Subheading',
-///   color: Colors.grey,
-/// )
-/// ```
-class HeadingFour extends StatelessWidget {
+class HeadingFour extends StatelessWidget implements HeadingInterface {
+  @override
   final String data;
+  @override
   Color color;
+  @override
+  TextAlign textAlign;
 
   HeadingFour({
     super.key,
     required this.data,
     this.color = DefinedTheme.onBackground,
+    this.textAlign = TextAlign.left,
   });
+
+  @override
+  TextStyle getTextStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: 16,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontSize: 16,
-      ),
+      textAlign: textAlign,
+      style: getTextStyle(),
     );
   }
 }
 
-class HeadingFive extends StatelessWidget {
+class HeadingFive extends StatelessWidget implements HeadingInterface {
+  @override
   final String data;
+  @override
   Color color;
+  @override
+  TextAlign textAlign;
 
   HeadingFive({
     super.key,
     required this.data,
     this.color = DefinedTheme.onBackground,
+    this.textAlign = TextAlign.left,
   });
+
+  @override
+  TextStyle getTextStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: 14,
+      fontWeight: FontWeight.w900,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontSize: 14,
-        fontWeight: FontWeight.w900,
-      ),
+      textAlign: textAlign,
+      style: getTextStyle(),
     );
   }
 }
 
-class HeadingSix extends StatelessWidget {
+class HeadingSix extends StatelessWidget implements HeadingInterface {
+  @override
   final String data;
+  @override
   Color color;
+  @override
+  TextAlign textAlign;
 
   HeadingSix({
     super.key,
     required this.data,
     this.color = DefinedTheme.onBackground,
+    this.textAlign = TextAlign.left,
   });
+
+  @override
+  TextStyle getTextStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: 14,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: TextStyle(
-        color: color,
-        fontSize: 14,
-      ),
+      textAlign: textAlign,
+      style: getTextStyle(),
     );
   }
 }
