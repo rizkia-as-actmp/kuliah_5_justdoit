@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:justdoit/src/common_widgets/custom_app_bar.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
@@ -9,6 +10,12 @@ class RegisterCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // terima data dari arguments yang dikirimkan oleh Navigator.pushReplacementNamed
+    final data =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+    //int currentHour = int.parse(data['time']!.split(':')[0]);
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -16,11 +23,11 @@ class RegisterCompleteScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeadingThree(
+            HeadingTwo(
               data: "Registration complete",
             ),
             mediumVSizedBox,
-            const _CustomText(data: "Hello [User's Name],"),
+            _CustomText(data: "Hello ${data["name"]},"),
             const _CustomText(
                 data:
                     "We’ve sent you an email regarding your payment for account activation. Please check your inbox for further instructions on how to complete the payment and activate your account."),
@@ -36,7 +43,11 @@ class RegisterCompleteScreen extends StatelessWidget {
                 data:
                     "If you don't see the email in your inbox, please check your spam or junk folder."),
             extraBigVSizedBox,
-            const CustomWideButton(labelText: "Back to login")
+            CustomWideButton(
+                labelText: "Back to login",
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/login');
+                })
           ],
         ),
       ),
