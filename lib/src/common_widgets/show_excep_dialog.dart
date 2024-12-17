@@ -86,9 +86,7 @@ class _AlertDialog extends StatelessWidget {
                 border: Border.all(color: DefinedTheme.greyish, width: 1),
                 borderRadius: BorderRadius.circular(DefinedSize.extraSmall),
               ),
-              child: Flexible(
-                child: Text(customErrorDetails),
-              ),
+              child: Text(customErrorDetails),
             ),
           ],
         ),
