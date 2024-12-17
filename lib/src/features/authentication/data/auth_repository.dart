@@ -63,6 +63,21 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
   }
 
   @override
+  Future<void> requestVerification(String email) async {
+    try {
+      Object data = {'email': email};
+      await sendRequest<void>(
+        uri: uriBuilder.api("collections/users/request-verification"),
+        method: "POST",
+        body: data,
+      );
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "4a9905c7", details: e);
+    }
+  }
+
+  @override
   Future<PbAuth> verifyOtp(String otpId, String otp) async {
     try {
       Object data = {
@@ -87,7 +102,7 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
     required Uri uri,
     required String method,
     Object? body,
-    required T Function(dynamic data) builder,
+    T Function(dynamic data)? builder,
   }) async {
     try {
       final http.Response response;
@@ -101,19 +116,22 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
               id: "20edecdd", message: "Method: $method not defined");
       }
 
-      final dynamic data;
-      switch (response.statusCode) {
-        case 200:
-          data = jsonDecode(response.body) as Map<String, dynamic>;
-          return builder(data);
-        default:
-          data = jsonDecode(response.body) as Map<String, dynamic>;
-          throw CustomException(
-              id: "d267e93f",
-              httpResponseCode: response.statusCode.toString(),
-              message: data["message"],
-              details: data["data"]);
+      if (builder != null) {
+        final dynamic data;
+        switch (response.statusCode) {
+          case 200:
+            data = jsonDecode(response.body) as Map<String, dynamic>;
+            return builder(data);
+          default:
+            data = jsonDecode(response.body) as Map<String, dynamic>;
+            throw CustomException(
+                id: "d267e93f",
+                httpResponseCode: response.statusCode.toString(),
+                message: data["message"],
+                details: data["data"]);
+        }
       }
+      return null as T;
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "ca06c78b", details: e);
