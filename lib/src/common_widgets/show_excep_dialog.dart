@@ -51,7 +51,11 @@ class _AlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: DefinedTheme.errorBackground,
       title: Center(
-          child: HeadingThree(data: errorMessage, color: DefinedTheme.error)),
+          child: HeadingThree(
+        data: errorMessage,
+        color: DefinedTheme.error,
+        textAlign: TextAlign.center,
+      )),
       content: SingleChildScrollView(
         child: ListBody(
           children: [
@@ -78,16 +82,19 @@ class _AlertDialog extends StatelessWidget {
                     style: TextStyle(fontSize: 10, color: DefinedTheme.error),
                   ),
             smallVSizedBox,
-            Container(
-              //color: DefinedTheme.errorSurface, // tidak bisa pakai color klo pakai decoration box decoration
-              padding: EdgeInsets.all(DefinedSize.extraSmall),
-              decoration: BoxDecoration(
-                color: DefinedTheme.errorSurface,
-                border: Border.all(color: DefinedTheme.greyish, width: 1),
-                borderRadius: BorderRadius.circular(DefinedSize.extraSmall),
-              ),
-              child: Text(customErrorDetails),
-            ),
+            customErrorDetails.isEmpty
+                ? extraSmallVSizedBox
+                : Container(
+                    //color: DefinedTheme.errorSurface, // tidak bisa pakai color klo pakai decoration box decoration
+                    padding: EdgeInsets.all(DefinedSize.extraSmall),
+                    decoration: BoxDecoration(
+                      color: DefinedTheme.errorSurface,
+                      border: Border.all(color: DefinedTheme.greyish, width: 1),
+                      borderRadius:
+                          BorderRadius.circular(DefinedSize.extraSmall),
+                    ),
+                    child: Text(customErrorDetails),
+                  ),
           ],
         ),
       ),
