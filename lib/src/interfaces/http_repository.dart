@@ -5,7 +5,7 @@ abstract interface class HttpRepository {
     required Uri uri,
     required String method,
     Object? body,
-    required T Function(dynamic data) builder,
+    T Function(dynamic data) builder,
   });
 
   ApiUriBuilder get uriBuilder;
