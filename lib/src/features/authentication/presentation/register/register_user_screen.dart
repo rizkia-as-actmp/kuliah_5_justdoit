@@ -90,9 +90,13 @@ class _RegisterUserFormState extends ConsumerState<_RegisterUserForm> {
 
       if (user != null && mounted) {
         // The warning occurs because BuildContext is used after an async operation, which can lead to errors if the widget is no longer mounted; fix this by checking if the widget is still mounted before using BuildContext.
-        Navigator.pushNamed(context, '/registration-complete', arguments: {
-          'name': user.name!,
-        });
+        // force destroy the provider.
+        ref.invalidate(registerControllerProvider);
+        Navigator.pushReplacementNamed(context, '/registration-complete',
+            arguments: {
+              'name': user.name!,
+              'email': user.email!,
+            });
       }
     }
   }
@@ -102,7 +106,6 @@ class _RegisterUserFormState extends ConsumerState<_RegisterUserForm> {
     final state = ref.watch(registerControllerProvider);
 
     if (state is AsyncError) {
-      //print(state.value);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showExceptionDialog(context, state.error);
       });
