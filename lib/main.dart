@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:justdoit/src/features/authentication/data/secure_storage_repository.dart';
 import 'package:justdoit/src/features/authentication/data/shared_preferences_repository.dart';
 import 'package:justdoit/src/features/authentication/presentation/otp/otp_screen.dart';
 import 'package:justdoit/src/features/authentication/presentation/register/register_user_screen.dart';
@@ -8,7 +7,7 @@ import 'package:justdoit/src/common_widgets/loading_screen.dart';
 import 'package:justdoit/src/common_widgets/splash_screen.dart';
 import 'package:justdoit/src/constants/colors.dart';
 import 'package:justdoit/src/features/activity/presentation/activities_screen.dart';
-import 'package:justdoit/src/features/authentication/presentation/register/login_user_screen.dart';
+import 'package:justdoit/src/features/authentication/presentation/login/login_user_screen.dart';
 import 'package:justdoit/src/features/authentication/presentation/register/register_complete_screen.dart';
 
 void main() {
@@ -44,9 +43,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: DefinedTheme.greyish),
         useMaterial3: true,
       ),
-      initialRoute: '/verify-otp',
+      initialRoute: '/register-user',
       routes: {
-        '/': (context) => const RegisterUserScreen(),
+        '/': (context) => const SplashScreen(),
+        '/register-user': (context) => const RegisterUserScreen(),
         '/login': (context) => const LoginUserScreen(),
         '/verify-otp': (context) => const InputOtpScreen(),
         '/registration-complete': (context) => const RegisterCompleteScreen(),
