@@ -11,6 +11,22 @@ class RegisterController extends _$RegisterController {
     return null;
   }
 
+  Future<bool> requestVerification({required String email}) async {
+    try {
+      state = const AsyncValue.loading();
+      state = await AsyncValue.guard(() async {
+        await Future.delayed(Duration(seconds: 2));
+        await ref
+            .read(authServiceProvider.notifier)
+            .requestVerification(email: email);
+      });
+      return state.hasError == false;
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "68d8a9c0", details: e);
+    }
+  }
+
   Future<User> submit({
     required String name,
     required String email,
@@ -37,7 +53,6 @@ class RegisterController extends _$RegisterController {
       return user;
     } catch (e) {
       if (e is CustomException) rethrow;
-      print(e);
       throw CustomException(id: "ce808fd3", details: e);
     }
   }
