@@ -45,6 +45,15 @@ class AuthService extends _$AuthService {
     return true;
   }
 
+  Future<void> requestVerification({required String email}) async {
+    try {
+      await ref.read(authRepositoryProvider).requestVerification(email);
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "fa96736c", details: e);
+    }
+  }
+
   Future<bool> verifyOtp({
     required String otp,
   }) async {
