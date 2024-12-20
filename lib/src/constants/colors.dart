@@ -14,5 +14,8 @@ class DefinedTheme {
   static const Color error = Color(0xFFcb8282);
   static const Color errorBackground = Color(0xFFFFF6F6);
   static const Color errorSurface = Color(0xFFFFFFFF);
+  static const Color success = Color(0xFF68A268);
+  static const Color successBackground = Color(0xFFF2FDF2);
+  static const Color successSurface = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
 }
