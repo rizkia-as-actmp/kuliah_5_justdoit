@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
+import 'package:justdoit/src/common_widgets/custom_text_button.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
 import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/common_widgets/show_success_dialog.dart';
@@ -9,9 +10,8 @@ import 'package:justdoit/src/constants/colors.dart';
 import 'package:justdoit/src/features/authentication/presentation/register/register_controller.dart';
 
 class RegisterCompleteScreen extends ConsumerStatefulWidget {
-  const RegisterCompleteScreen({super.key});
-
   @override
+  const RegisterCompleteScreen({super.key});
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _RegisterCompleteScreenState();
 }
@@ -37,16 +37,11 @@ class _RegisterCompleteScreenState
   }
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    // terima data dari arguments yang dikirimkan oleh Navigator.pushReplacementNamed
     setState(() {
       data = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // terima data dari arguments yang dikirimkan oleh Navigator.pushReplacementNamed
 
     final state = ref.watch(registerControllerProvider);
 
@@ -110,12 +105,16 @@ class _RegisterCompleteScreenState
               onPressed: _requestVerification,
             ),
             mediumVSizedBox,
-            CustomWideButton(
-              labelText: "Kembali ke Login",
-              disabled: state.isLoading,
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/login');
-              },
+            const Center(child: Text("Or")),
+            mediumVSizedBox,
+            Center(
+              child: CustomTextButton(
+                labelText: "Kembali ke Login",
+                disabled: state.isLoading,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
             ),
           ],
         ),

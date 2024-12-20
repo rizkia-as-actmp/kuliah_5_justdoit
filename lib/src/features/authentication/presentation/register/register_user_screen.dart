@@ -158,7 +158,7 @@ class _RegisterUserFormState extends ConsumerState<_RegisterUserForm> {
                 onPressed: _onSubmit,
               ),
               mediumVSizedBox,
-              const Center(child: Text("Og")),
+              const Center(child: Text("Or")),
               mediumVSizedBox,
               Center(
                 child: CustomTextButton(
