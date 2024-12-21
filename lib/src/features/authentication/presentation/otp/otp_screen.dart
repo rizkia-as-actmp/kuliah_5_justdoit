@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
@@ -8,9 +6,7 @@ import 'package:justdoit/src/common_widgets/custom_text_field.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
 import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
-import 'package:justdoit/src/constants/colors.dart';
 import 'package:justdoit/src/features/authentication/presentation/otp/otp_controller.dart';
-import 'package:justdoit/src/exceptions/custom_exception.dart';
 
 class InputOtpScreen extends StatelessWidget {
   const InputOtpScreen({super.key});
@@ -21,7 +17,7 @@ class InputOtpScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          HeadingTwo(data: "Welcome Back"),
+          HeadingTwo(data: "Verifikasi OTP"),
           extraBigVSizedBox,
           const _InputOtpForm(),
         ],
@@ -61,70 +57,12 @@ class _InputOtpFormState extends ConsumerState<_InputOtpForm> {
   void _onSubmit() async {
     if (_formKey.currentState!.validate()) {
       final controller = ref.read(otpControllerProvider.notifier);
-      print("ht");
       final isSuccess = await controller.submit(otpCode: otpCode);
 
-      print("ht2");
       if (isSuccess) {
         Navigator.pushReplacementNamed(context, '/activities');
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        //SnackBar(content: Text('$email - $password')),
-        SnackBar(content: Text('status login : $isSuccess')),
-      );
     }
-  }
-
-  _showAlertDialog(BuildContext context, error) {
-    if (error is Exception) {
-      print("huraaa");
-    }
-    ;
-    print(error);
-    final errorData = jsonDecode(error.toString()) as Map<String, dynamic>;
-    print(errorData);
-    CustomExceptionObject customError =
-        CustomExceptionObject.fromJson(errorData);
-
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: DefinedTheme.errorSurface,
-          title: Center(
-              child: HeadingThree(
-            data: customError.message.toUpperCase(),
-            color: DefinedTheme.error,
-          )),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                Text(
-                  customError.id,
-                  textAlign: TextAlign.center,
-                ),
-                smallVSizedBox,
-                Text(
-                  customError.details.toString(),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-          contentTextStyle: TextStyle(color: DefinedTheme.black),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          actions: <Widget>[
-            CustomWideButton(
-              labelText: "Understood",
-              backgroundColor: DefinedTheme.error,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
@@ -149,26 +87,10 @@ class _InputOtpFormState extends ConsumerState<_InputOtpForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                color: Colors.cyan,
-                child: switch (state) {
-                  //AsyncData(:final value) => Text('isi kepala: $value'),
-                  //AsyncError(:final error) => _showAlertDialog, // error
-                  _ =>
-                    Center(child: Text('LOADING-STATE : ${state.isLoading}')),
-                },
-              ),
-              //Container(
-              //  color: Colors.cyan,
-              //  child: switch (state2) {
-              //    AsyncError(:final error) => Text('Error: $error'),
-              //    _ => Center(child: Text('tes ${state.isLoading}')),
-              //  },
-              //),
               CustomTextField(
                 controller: _otpCodeController,
                 labelText: "Kode OTP",
-                hintText: "2851",
+                hintText: "- - - -",
                 disabled: state.isLoading,
               ),
               extraBigVSizedBox,
@@ -180,7 +102,14 @@ class _InputOtpFormState extends ConsumerState<_InputOtpForm> {
               mediumVSizedBox,
               const Center(child: Text("Or")),
               mediumVSizedBox,
-              const Center(child: CustomTextButton(labelText: "Register"))
+              Center(
+                  child: CustomTextButton(
+                labelText: "Register",
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/register-user');
+                },
+                disabled: state.isLoading,
+              ))
             ],
           ),
         ),
