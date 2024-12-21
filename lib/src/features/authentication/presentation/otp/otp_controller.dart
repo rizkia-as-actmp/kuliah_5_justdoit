@@ -17,11 +17,10 @@ class OtpController extends _$OtpController {
       state = await AsyncValue.guard(() async {
         await Future.delayed(Duration(seconds: 2));
         await ref.read(authServiceProvider.notifier).verifyOtp(otp: otpCode);
-        //throw Exception();
-        //return "tes";
       });
       return state.hasError == false;
     } catch (e) {
+      if (e is CustomException) rethrow;
       throw CustomException(id: "4f37ff62", details: e);
     }
   }
