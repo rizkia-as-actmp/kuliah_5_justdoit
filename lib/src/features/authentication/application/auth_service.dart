@@ -61,8 +61,6 @@ class AuthService extends _$AuthService {
       final otpId =
           ref.read(otpIdSharedPrefRepositoryProvider.notifier).readData();
       final auth = await ref.read(authRepositoryProvider).verifyOtp(otpId, otp);
-      //await ref .watch(otpIdSharedPrefRepositoryProvider.notifier) .writeData(auth.otpId!);
-      //print(await ref .watch(otpIdSharedPrefRepositoryProvider.notifier) .readData());
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "f6ad0590", details: e);
