@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:justdoit/src/common_widgets/custom_wide_button.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
 import 'package:justdoit/src/constants/colors.dart';
+import 'package:justdoit/src/constants/sizes.dart';
 
 showSuccessDialog({
   required BuildContext context,
@@ -40,7 +41,8 @@ class _AlertDialog extends StatelessWidget {
       )),
       content: Text(content),
       contentTextStyle: TextStyle(color: DefinedTheme.black),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(DefinedSize.extraSmall)),
       actions: <Widget>[
         CustomWideButton(
           labelText: "Alright",
