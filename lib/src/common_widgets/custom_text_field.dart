@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/constants/colors.dart';
+import 'package:justdoit/src/constants/sizes.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -26,9 +27,9 @@ class CustomTextField extends StatelessWidget {
     return null;
   }
 
-  final double _borderWidth = 3;
+  final double _borderWidth = 1;
   final BorderRadius _borderRadius =
-      const BorderRadius.all(Radius.circular(10));
+      const BorderRadius.all(Radius.circular(DefinedSize.extraSmall));
   final Color _borderColor = const Color(0xFF314748);
   final Color _enabledBorderColor = const Color(0xFF314748);
   final Color _disabledBorderColor = DefinedTheme.greyish;
