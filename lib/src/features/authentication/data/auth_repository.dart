@@ -121,17 +121,17 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
   }
 
   @override
-  Future<PbAuth> verifyOtp(String otpId, String otp) async {
+  Future<String> verifyOtp(String otpId, String otp) async {
     try {
       Object data = {
         'otpId': otpId,
         'password': otp,
       };
-      return await sendRequest<PbAuth>(
+      return await sendRequest<String>(
         uri: uriBuilder.api("collections/users/auth-with-otp"),
         method: "POST",
         body: data,
-        builder: (responseData) => PbAuth.fromJson(responseData),
+        builder: (responseData) => responseData["token"],
       );
     } catch (e) {
       if (e is CustomException) rethrow;
