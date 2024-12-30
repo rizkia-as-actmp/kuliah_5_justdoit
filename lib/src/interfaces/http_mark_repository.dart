@@ -7,11 +7,12 @@ abstract interface class HttpMarkRepository implements HttpRepository {
   // Future<PbAuth> authWithPassword(String email, String password);
   // Future<PbAuth> verifyOtp(String otpId, String otp);
   // Future<void> requestVerification(String email);
-  Future<MarkList> getList();
-  Future<Mark> getDetail(String markId);
-  Future<Mark> createMark(String title, String content);
-  Future<Mark> updateMark(String title, String content, String markId);
-  Future<void> deleteMark(String markId);
+  Future<MarkList> getList(String token);
+  Future<Mark> getDetail(String token, String markId);
+  Future<Mark> createMark(String token, String title, String content);
+  Future<Mark> updateMark(
+      String token, String title, String content, String markId);
+  Future<void> deleteMark(String token, String markId);
   //Future<void> logoutUser();
   //Future<void> resetPassword(String email);
   //Future<void> changePassword(String oldPassword, String newPassword);

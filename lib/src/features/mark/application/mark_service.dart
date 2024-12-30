@@ -1,4 +1,5 @@
 import 'package:justdoit/src/exceptions/custom_exception.dart';
+import 'package:justdoit/src/features/authentication/application/auth_providers.dart';
 import 'package:justdoit/src/features/mark/application/mark_providers.dart';
 import 'package:justdoit/src/features/mark/data/mark_repository.dart';
 import 'package:justdoit/src/features/mark/domain/mark.dart';
@@ -13,8 +14,10 @@ class MarkService extends _$MarkService {
   Future<Mark> createMark(
       {required String title, required String content}) async {
     try {
-      final result =
-          await ref.read(markRepositoryProvider).createMark(title, content);
+      final authToken = await ref.read(authProvider.notifier).get();
+      final result = await ref
+          .read(markRepositoryProvider)
+          .createMark(authToken!, title, content);
       await ref.read(marksProvider.notifier).refresh();
       return result;
     } catch (e) {
@@ -28,9 +31,10 @@ class MarkService extends _$MarkService {
       required String content,
       required String markId}) async {
     try {
+      final authToken = await ref.read(authProvider.notifier).get();
       final result = await ref
           .read(markRepositoryProvider)
-          .updateMark(title, content, markId);
+          .updateMark(authToken!, title, content, markId);
 
       await ref.read(markDetailProvider(markId: markId).notifier).refresh();
       await ref.read(marksProvider.notifier).refresh();
@@ -44,7 +48,8 @@ class MarkService extends _$MarkService {
 
   Future<void> deleteMark({required String markId}) async {
     try {
-      await ref.read(markRepositoryProvider).deleteMark(markId);
+      final authToken = await ref.read(authProvider.notifier).get();
+      await ref.read(markRepositoryProvider).deleteMark(authToken!, markId);
       await ref.read(marksProvider.notifier).refresh();
     } catch (e) {
       if (e is CustomException) rethrow;

@@ -1,4 +1,5 @@
 import 'package:justdoit/src/exceptions/custom_exception.dart';
+import 'package:justdoit/src/features/authentication/application/auth_providers.dart';
 import 'package:justdoit/src/features/mark/data/mark_repository.dart';
 import 'package:justdoit/src/features/mark/domain/mark.dart';
 import 'package:justdoit/src/features/mark/domain/marklist.dart';
@@ -15,8 +16,9 @@ class MarkDetail extends _$MarkDetail {
   Future<Mark?> refresh() async {
     try {
       // penjelasan kenapa ini tidak pakai _fetchMarkList ada sama seperti kasus setAuth pada authProviders
+      final authToken = await ref.read(authProvider.notifier).get();
       final markDetail =
-          await ref.read(markRepositoryProvider).getDetail(markId);
+          await ref.read(markRepositoryProvider).getDetail(authToken!, markId);
 
       state = AsyncValue.data(markDetail);
       return state.value;
@@ -29,8 +31,9 @@ class MarkDetail extends _$MarkDetail {
   Future<Mark> _fetch({required String markId}) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
+      final authToken = await ref.read(authProvider.notifier).get();
       final markDetail =
-          await ref.read(markRepositoryProvider).getDetail(markId);
+          await ref.read(markRepositoryProvider).getDetail(authToken!, markId);
       return markDetail;
     });
     return state.value!;
@@ -50,7 +53,9 @@ class Marks extends _$Marks {
 
   Future<MarkList?> refresh() async {
     try {
-      final markList = await ref.read(markRepositoryProvider).getList();
+      final authToken = await ref.read(authProvider.notifier).get();
+      final markList =
+          await ref.read(markRepositoryProvider).getList(authToken!);
 
       state = AsyncValue.data(markList);
       return state.value;
@@ -63,7 +68,9 @@ class Marks extends _$Marks {
   Future<MarkList?> _fetch() async {
     state = const AsyncValue.loading();
     final result = await AsyncValue.guard(() async {
-      final markList = await ref.read(markRepositoryProvider).getList();
+      final authToken = await ref.read(authProvider.notifier).get();
+      final markList =
+          await ref.read(markRepositoryProvider).getList(authToken!);
       return markList;
     });
 

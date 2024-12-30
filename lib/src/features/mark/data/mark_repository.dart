@@ -21,11 +21,12 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
   final ApiUriBuilder uriBuilder;
 
   @override
-  Future<MarkList> getList() async {
+  Future<MarkList> getList(String token) async {
     try {
       return await sendRequest<MarkList>(
           uri: uriBuilder.api("collections/marks/records"),
           method: "GET",
+          headers: {'Authorization': token},
           builder: (responseData) => MarkList.fromJson(responseData));
     } catch (e) {
       if (e is CustomException) rethrow;
@@ -34,11 +35,12 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
   }
 
   @override
-  Future<Mark> getDetail(String markId) async {
+  Future<Mark> getDetail(String token, String markId) async {
     try {
       return await sendRequest<Mark>(
           uri: uriBuilder.api("collections/marks/records/$markId"),
           method: "GET",
+          headers: {'Authorization': token},
           builder: (responseData) => Mark.fromJson(responseData));
     } catch (e) {
       if (e is CustomException) rethrow;
@@ -47,7 +49,7 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
   }
 
   @override
-  Future<Mark> createMark(String title, String content) async {
+  Future<Mark> createMark(String token, String title, String content) async {
     try {
       Object data = {
         'title': title,
@@ -57,6 +59,7 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
       return await sendRequest<Mark>(
         uri: uriBuilder.extendApi("collections/marks/records"),
         method: "POST",
+        headers: {'Authorization': token},
         body: data,
         builder: (responseData) => Mark.fromJson(responseData),
       );
@@ -67,7 +70,8 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
   }
 
   @override
-  Future<Mark> updateMark(String title, String content, String markId) async {
+  Future<Mark> updateMark(
+      String token, String title, String content, String markId) async {
     try {
       Object data = {
         'title': title,
@@ -77,6 +81,7 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
       return await sendRequest<Mark>(
         uri: uriBuilder.extendApi("collections/marks/records/$markId"),
         method: "PATCH",
+        headers: {'Authorization': token},
         body: data,
         builder: (responseData) => Mark.fromJson(responseData),
       );
@@ -87,11 +92,13 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
   }
 
   @override
-  Future<void> deleteMark(String markId) async {
+  Future<void> deleteMark(String token, String markId) async {
     try {
       await sendRequest<void>(
-          uri: uriBuilder.api("collections/marks/records/$markId"),
-          method: "DELETE");
+        uri: uriBuilder.api("collections/marks/records/$markId"),
+        method: "DELETE",
+        headers: {'Authorization': token},
+      );
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "b2db852e", details: e);
@@ -103,6 +110,7 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
   Future<T> sendRequest<T>({
     required Uri uri,
     required String method,
+    Map<String, String>? headers,
     Object? body,
     T Function(dynamic data)? builder,
   }) async {
@@ -110,13 +118,13 @@ class PocketbaseMarkRepository implements HttpMarkRepository {
       final http.Response response;
       switch (method) {
         case "GET":
-          response = await http.get(uri);
+          response = await http.get(uri, headers: headers);
         case "POST":
-          response = await http.post(uri, body: body);
+          response = await http.post(uri, body: body, headers: headers);
         case "PATCH":
-          response = await http.patch(uri, body: body);
+          response = await http.patch(uri, body: body, headers: headers);
         case "DELETE":
-          response = await http.delete(uri);
+          response = await http.delete(uri, headers: headers);
         default:
           throw CustomException(
               id: "40acfb2e", message: "Method: $method not defined");

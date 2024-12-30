@@ -18,57 +18,58 @@ class MarkListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final markListState = ref.watch(marksProvider);
+    final marksState = ref.watch(marksProvider);
 
-    return markListState.when(
-      loading: () => const LoadingScreen(),
-      error: (error, _) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          showExceptionDialog(context, error);
-        });
-        return Scaffold(
-          appBar: CustomAppBar(
-            leftRowWidgets: [HeadingThree(data: "Markdown Editor")],
-          ),
-          body: const Center(child: Text("Failed to load data")),
-        );
-      },
-      data: (markList) => _MarkListBody(markList: markList),
-    );
+    if (marksState.hasError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showExceptionDialog(context, marksState.error);
+      });
+      return LoadingScreen();
+    }
+
+    if (marksState.isLoading || marksState.value == null) {
+      return LoadingScreen();
+    } else {
+      return _MarkListBody(marks: marksState.value!);
+    }
   }
 }
 
 class _MarkListBody extends StatelessWidget {
-  final MarkList? markList;
+  final MarkList marks;
 
-  const _MarkListBody({required this.markList});
+  const _MarkListBody({required this.marks});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: CustomDrawer(),
       appBar: MarkListAppBar(),
-      //appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(DefinedSize.medium),
-        child: SingleChildScrollView(
-          child: Center(
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              runSpacing: DefinedSize.medium,
-              spacing: DefinedSize.medium,
-              children: (markList == null)
-                  ? [Text("kosong melompong")]
-                  : markList!.items!
-                      .map((mark) => MarkCard(
-                            headerLabelText: mark.title!,
-                            bodyText: mark.previewContent ?? "No Description",
-                            markId: mark.id!,
-                          ))
-                      .toList(),
-            ),
-          ),
-        ),
+        child: (marks.items!.isEmpty)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(child: HeadingFour(data: "Kosong melompong")),
+                ],
+              )
+            : SingleChildScrollView(
+                child: Center(
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    runSpacing: DefinedSize.medium,
+                    spacing: DefinedSize.medium,
+                    children: marks.items!
+                        .map((mark) => MarkCard(
+                              headerLabelText: mark.title!,
+                              bodyText: mark.previewContent ?? "No Description",
+                              markId: mark.id!,
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: DefinedTheme.secondary,
