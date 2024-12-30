@@ -2,14 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:justdoit/src/common_widgets/custom_sized_box.dart';
 import 'package:justdoit/src/common_widgets/custom_text.dart';
+import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/constants/colors.dart';
+import 'package:justdoit/src/features/authentication/application/auth_providers.dart';
+import 'package:justdoit/src/features/mark/application/mark_providers.dart';
 
 // NOTE: Gunakan ConsumerWidget sebagai pengganti StatelessWidget, seperti yang disediakan oleh Riverpod.
-class SplashScreen extends ConsumerWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  void _loadAndPush() async {
+    final authState = ref.watch(authProvider);
+
+    await authState.when(
+        data: (token) async {
+          if (token != null) {
+            await ref.watch(marksProvider.notifier).refresh();
+            Navigator.pushReplacementNamed(context, '/mark-list');
+          } else {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        },
+        error: (error, _) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            showExceptionDialog(context, error);
+            ref.invalidate(authProvider);
+          });
+        },
+        loading: () {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     //NOTE: Dengan "ref.read" dan "myProvider.notifier", kita bisa mendapatkan instance kelas notifer untuk memanggil metode "addTodo".
     //final  auth = ref.read(authRepositoryProvider.notifier);
     // final tescols = ref.watch(getTestColsProvider);
@@ -22,6 +51,9 @@ class SplashScreen extends ConsumerWidget {
     //   _ => 'tunggu....',
     // });
 
+    // Fungsi microtask dieksekusi setelah tugas sinkron selesai, tetapi sebelum event loop menjalankan tugas-tugas lainnya.
+    Future.microtask(_loadAndPush);
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -33,7 +65,7 @@ class SplashScreen extends ConsumerWidget {
               strokeWidth: 6,
             ),
             bigVSizedBox,
-            HeadingOne(data: "JustDoIT")
+            HeadingOne(data: "MarkDawg")
           ],
         ),
       ),
