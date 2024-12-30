@@ -5,7 +5,6 @@ import 'package:justdoit/src/common_widgets/custom_text.dart';
 import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/constants/colors.dart';
 import 'package:justdoit/src/features/authentication/application/auth_providers.dart';
-import 'package:justdoit/src/features/mark/application/mark_providers.dart';
 
 // NOTE: Gunakan ConsumerWidget sebagai pengganti StatelessWidget, seperti yang disediakan oleh Riverpod.
 class SplashScreen extends ConsumerStatefulWidget {
@@ -19,11 +18,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void _loadAndPush() async {
     final authState = ref.watch(authProvider);
 
+    await Future.delayed(Duration(seconds: 2));
+
     await authState.when(
         data: (token) async {
           if (token != null) {
-            await ref.watch(marksProvider.notifier).refresh();
-            Navigator.pushReplacementNamed(context, '/mark-list');
+            //Navigator.pushReplacementNamed(context, '/mark-list');
+            Navigator.pushNamed(context,
+                '/mark-list'); // ketika menggunakan replacement auth menghilang
           } else {
             Navigator.pushReplacementNamed(context, '/login');
           }
