@@ -114,7 +114,7 @@ function registrationEmail(amount, qrURI, mailtoAddress) {
             </div>
         </div>
         <div class="footer">
-            © 2024 JustDoIT. Semua Hak Dilindungi.
+            © 2024 MarkDawg. Semua Hak Dilindungi.
         </div>
     </div>
 </body>
@@ -245,7 +245,7 @@ function paymentStatusEmail(status, mailtoAddress) {
             </div>
         </div>
         <div class="footer">
-            © 2024 JustDoIT. Semua Hak Dilindungi.
+            © 2024 MarkDawg. Semua Hak Dilindungi.
         </div>
     </div>
 </body>
