@@ -1,4 +1,6 @@
+import 'package:justdoit/src/features/authentication/application/auth_providers.dart';
 import 'package:justdoit/src/features/authentication/data/auth_repository.dart';
+import 'package:justdoit/src/features/authentication/data/secure_storage_repository.dart';
 import 'package:justdoit/src/features/authentication/data/shared_preferences_repository.dart';
 import 'package:justdoit/src/exceptions/custom_exception.dart';
 import 'package:justdoit/src/features/authentication/domain/user.dart';
@@ -74,7 +76,6 @@ class AuthService extends _$AuthService {
     try {
       await ref.read(authRepositoryProvider).confirmPasswordReset(
           token, oldPassword, newPassword, newPasswordConfirm);
-      //await ref .read(authProvider.notifier) .refresh(); // TODO: setelah buath flutter secure storage
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "fae3aa4f", details: e);
@@ -88,7 +89,12 @@ class AuthService extends _$AuthService {
     try {
       final otpId =
           ref.read(otpIdSharedPrefRepositoryProvider.notifier).readData();
-      final auth = await ref.read(authRepositoryProvider).verifyOtp(otpId, otp);
+      final authToken =
+          await ref.read(authRepositoryProvider).verifyOtp(otpId, otp);
+      await ref
+          .read(pbAuthTokenSecureStorageRepositoryProvider.notifier)
+          .writeData(authToken);
+      await ref.read(authProvider.notifier).refresh();
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "f6ad0590", details: e);
