@@ -76,6 +76,8 @@ class AuthService extends _$AuthService {
     try {
       await ref.read(authRepositoryProvider).confirmPasswordReset(
           token, oldPassword, newPassword, newPasswordConfirm);
+
+      await logOut();
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "fae3aa4f", details: e);
@@ -100,6 +102,19 @@ class AuthService extends _$AuthService {
       throw CustomException(id: "f6ad0590", details: e);
     }
 
+    return true;
+  }
+
+  Future<bool> logOut() async {
+    try {
+      await ref
+          .read(pbAuthTokenSecureStorageRepositoryProvider.notifier)
+          .deleteData();
+      await ref.read(authProvider.notifier).refresh();
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "be3aa6dc", details: e);
+    }
     return true;
   }
 }

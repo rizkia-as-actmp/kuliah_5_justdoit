@@ -145,14 +145,18 @@ class CustomDrawer extends ConsumerWidget {
             leading: Icon(Icons.key_outlined),
             title: "Change password",
           ),
-          // _CustomListTile(
-          //   onTap: () async {
-          //     await ref.read(authServiceProvider.notifier).logOut();
-          //     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-          //   },
-          //   leading: Icon(Icons.logout_outlined),
-          //   title: "Logout",
-          // ),
+          _CustomListTile(
+            onTap: () async {
+              final isSuccessLogOut =
+                  await ref.read(authServiceProvider.notifier).logOut();
+              if (isSuccessLogOut) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              }
+            },
+            leading: Icon(Icons.logout_outlined),
+            title: "Logout",
+          ),
         ],
       ),
     );
