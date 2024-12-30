@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'change_password_controller.dart';
+part of 'password_reset_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$changePasswordControllerHash() =>
-    r'4f2cec5e7662c08e8327f15bcc19198943c4c75d';
+    r'ea6e840ca9124cff5e11cec85ac41c6ca0ce7439';
 
 /// See also [ChangePasswordController].
 @ProviderFor(ChangePasswordController)

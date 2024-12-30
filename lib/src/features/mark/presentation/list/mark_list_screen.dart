@@ -136,23 +136,23 @@ class CustomDrawer extends ConsumerWidget {
             onTap: () async {
               final token = await ref
                   .read(authServiceProvider.notifier)
-                  .requestChangePassword(email: "rizkia.as.pac@gmail.com");
+                  .requestPasswordReset(email: "rizkia.as.pac@gmail.com");
 
               print(token);
-              Navigator.pushNamed(context, '/change-password',
+              Navigator.pushNamed(context, '/user-password-reset',
                   arguments: {'token': token});
             },
             leading: Icon(Icons.key_outlined),
             title: "Change password",
           ),
-          _CustomListTile(
-            onTap: () async {
-              await ref.read(authServiceProvider.notifier).logOut();
-              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-            },
-            leading: Icon(Icons.logout_outlined),
-            title: "Logout",
-          ),
+          // _CustomListTile(
+          //   onTap: () async {
+          //     await ref.read(authServiceProvider.notifier).logOut();
+          //     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          //   },
+          //   leading: Icon(Icons.logout_outlined),
+          //   title: "Logout",
+          // ),
         ],
       ),
     );

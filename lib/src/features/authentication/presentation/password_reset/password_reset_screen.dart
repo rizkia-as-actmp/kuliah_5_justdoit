@@ -8,11 +8,11 @@ import 'package:justdoit/src/common_widgets/show_excep_dialog.dart';
 import 'package:justdoit/src/common_widgets/type.dart';
 import 'package:justdoit/src/exceptions/custom_exception.dart';
 import 'package:justdoit/src/features/authentication/data/auth_repository.dart';
-import 'package:justdoit/src/features/authentication/presentation/change_password/change_password_controller.dart';
+import 'package:justdoit/src/features/authentication/presentation/password_reset/password_reset_controller.dart';
 import 'package:justdoit/src/features/mark/application/mark_service.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({super.key});
+class PasswordResetScreen extends StatelessWidget {
+  const PasswordResetScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ChangePasswordScreen extends StatelessWidget {
         children: [
           HeadingTwo(data: "Ubah Password"),
           extraBigVSizedBox,
-          const _ChangePasswordForm(),
+          const _PasswordResetForm(),
         ],
       ),
     );
@@ -30,14 +30,14 @@ class ChangePasswordScreen extends StatelessWidget {
 }
 
 // Menggunakan `ConsumerStatefulWidget` untuk form yang membutuhkan state.
-class _ChangePasswordForm extends ConsumerStatefulWidget {
-  const _ChangePasswordForm({super.key});
+class _PasswordResetForm extends ConsumerStatefulWidget {
+  const _PasswordResetForm({super.key});
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ChangePasswordFormState();
+      _PasswordResetFormState();
 }
 
-class _ChangePasswordFormState extends ConsumerState<_ChangePasswordForm> {
+class _PasswordResetFormState extends ConsumerState<_PasswordResetForm> {
   final _formKey = GlobalKey<FormState>();
   late FocusScopeNode _focusNode;
 

@@ -2,7 +2,7 @@ import 'package:justdoit/src/features/authentication/application/auth_service.da
 import 'package:justdoit/src/exceptions/custom_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'change_password_controller.g.dart';
+part 'password_reset_controller.g.dart';
 
 @riverpod
 class ChangePasswordController extends _$ChangePasswordController {
@@ -27,12 +27,18 @@ class ChangePasswordController extends _$ChangePasswordController {
         }
 
         await Future.delayed(const Duration(seconds: 1));
-        await ref.read(authServiceProvider.notifier).confirmChangePassword(
-              oldPassword: oldPassword,
-              newPassword: newPassword,
-              confirmNewPassword: confirmPassword,
-              token: token,
-            );
+        final result =
+            await ref.read(authServiceProvider.notifier).confirmPasswordReset(
+                  oldPassword: oldPassword,
+                  newPassword: newPassword,
+                  newPasswordConfirm: confirmPassword,
+                  token: token,
+                );
+
+        if (!result) {
+          throw CustomException(
+              id: "73964de7", message: 'Failed to update password');
+        }
       });
 
       return state.hasError == false;
