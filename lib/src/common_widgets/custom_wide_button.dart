@@ -22,7 +22,7 @@ class CustomWideButton extends StatelessWidget {
     this.disabled = false,
   });
 
-  final double _borderWidth = 2;
+  final double _borderWidth = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CustomWideButton extends StatelessWidget {
                   width: _borderWidth,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(DefinedSize.small),
+                  borderRadius: BorderRadius.circular(DefinedSize.extraSmall),
                 )),
             onPressed: disabled ? null : onPressed,
             child: HeadingThree(

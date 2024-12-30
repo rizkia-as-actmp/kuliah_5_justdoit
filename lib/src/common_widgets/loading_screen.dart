@@ -19,7 +19,7 @@ class LoadingScreen extends StatelessWidget {
               strokeWidth: 6,
             ),
             bigVSizedBox,
-            HeadingOne(data: "JustWait")
+            HeadingOne(data: "MarkDawg")
           ],
         ),
       ),
