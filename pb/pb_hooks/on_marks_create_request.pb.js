@@ -14,15 +14,19 @@ routerAdd("POST", "/extend/api/collections/marks/records", (c) => {
 
   let authRecord = c.auth
   if (!authRecord) {
-    // throw new ForbiddenError("Unauthorized: You do not have permission to perform this action");
+    throw new ForbiddenError("Unauthorized: You do not have permission to perform this action");
   }
 
   let data = c.requestInfo().body
 
   let { preview: prev, remaining: rem } = cut.cutPreview(data.content, 8, 50)
 
+  //console.log(c.authRecord.id) // tidak bisa klo custom route
+  // c.auth.id // custom route pakai ini
+
   const markCol = $app.findCollectionByNameOrId("marks") // mencari data collection untuk collection registratins
   const markRecord = new Record(markCol)
+  markRecord.set("owner", c.auth.id)
   markRecord.set("title", data.title)
   markRecord.set("preview_content", prev)
   markRecord.set("remaining_content", rem)
@@ -38,5 +42,5 @@ routerAdd("POST", "/extend/api/collections/marks/records", (c) => {
   })
 
 
-  //}, $apis.requireAuth())
-},)
+}, $apis.requireAuth())
+//},)

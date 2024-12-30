@@ -17,7 +17,7 @@ routerAdd("PATCH", "/extend/api/collections/marks/records/{id}", (c) => {
 
   let authRecord = c.auth
   if (!authRecord) {
-    // throw new ForbiddenError("Unauthorized: You do not have permission to perform this action");
+    throw new ForbiddenError("Unauthorized: You do not have permission to perform this action");
   }
 
   let data = c.requestInfo().body
@@ -38,6 +38,6 @@ routerAdd("PATCH", "/extend/api/collections/marks/records/{id}", (c) => {
     ),
   })
 
-  //}, $apis.requireAuth())
-},)
+}, $apis.requireAuth())
+//},)
 
