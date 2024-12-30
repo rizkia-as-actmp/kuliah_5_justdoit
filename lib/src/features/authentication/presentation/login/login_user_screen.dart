@@ -41,6 +41,8 @@ class _LoginUserFormState extends ConsumerState<_LoginUserForm> {
   @override
   void initState() {
     super.initState();
+    _emailController.text = "rizkia.as.pac@gmail.com";
+    _passwordController.text = "21204444";
     _focusNode = FocusScopeNode();
   }
 

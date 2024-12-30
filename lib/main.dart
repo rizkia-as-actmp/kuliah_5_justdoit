@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: DefinedTheme.greyish),
         useMaterial3: true,
       ),
-      initialRoute: '/mark-list',
+      initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
         '/mark-list': (context) => const MarkListScreen(),
