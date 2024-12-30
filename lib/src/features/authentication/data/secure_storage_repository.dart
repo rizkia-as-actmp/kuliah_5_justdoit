@@ -11,26 +11,27 @@ abstract interface class SecureStorageInterface {
 
 // SecureStorageRepository untuk penggunaan general disini digunakan untuk menyimpan berbagai value
 class SecureStorageRepository {
-  SecureStorageRepository();
+  late final FlutterSecureStorage storage;
 
-  // Create storage
-  final storage = new FlutterSecureStorage();
-
-  // Write value
-  Future<void> writeData(String key, String value) async {
-    final res = await storage.write(key: key, value: value);
-    return res;
+  SecureStorageRepository() {
+    storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
   }
 
-  // Read value
+  Future<void> writeData(String key, String value) async {
+    await storage.write(key: key, value: value);
+  }
+
   Future<String?> readData(String key) async {
     return await storage.read(key: key);
   }
 
-  // Delete value
   Future<void> deleteData(String key) async {
-    return await storage.delete(key: key);
+    await storage.delete(key: key);
   }
+
+  AndroidOptions _getAndroidOptions() => AndroidOptions(
+        encryptedSharedPreferences: true,
+      );
 }
 
 @riverpod
