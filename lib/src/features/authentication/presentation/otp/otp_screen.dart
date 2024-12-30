@@ -60,7 +60,7 @@ class _InputOtpFormState extends ConsumerState<_InputOtpForm> {
       final isSuccess = await controller.submit(otpCode: otpCode);
 
       if (isSuccess) {
-        Navigator.pushReplacementNamed(context, '/splash');
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     }
   }
