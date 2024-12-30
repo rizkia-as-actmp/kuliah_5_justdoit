@@ -81,6 +81,31 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
   }
 
   @override
+  Future<void> confirmPasswordReset(
+    String token,
+    String oldPassword,
+    String newPassword,
+    String newPasswordConfirm,
+  ) async {
+    try {
+      Object data = {
+        'token': token,
+        'oldPassword': oldPassword,
+        'password': newPassword,
+        'passwordConfirm': newPasswordConfirm,
+      };
+      return await sendRequest<void>(
+        uri: uriBuilder.api("collections/users/confirm-password-reset"),
+        method: "POST",
+        body: data,
+      );
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "16ae60ee", details: e);
+    }
+  }
+
+  @override
   Future<void> requestVerification(String email) async {
     try {
       Object data = {'email': email};

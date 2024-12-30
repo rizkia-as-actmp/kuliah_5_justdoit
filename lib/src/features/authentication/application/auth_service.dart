@@ -59,11 +59,27 @@ class AuthService extends _$AuthService {
       final token =
           await ref.read(authRepositoryProvider).requestPasswordReset(email);
       return token;
-      //await ref .read(authProvider.notifier) .refresh(); // TODO: setelah buath flutter secure storage
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "39d0fb16", details: e);
     }
+  }
+
+  Future<bool> confirmPasswordReset({
+    required String token,
+    required String oldPassword,
+    required String newPassword,
+    required String newPasswordConfirm,
+  }) async {
+    try {
+      await ref.read(authRepositoryProvider).confirmPasswordReset(
+          token, oldPassword, newPassword, newPasswordConfirm);
+      //await ref .read(authProvider.notifier) .refresh(); // TODO: setelah buath flutter secure storage
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "fae3aa4f", details: e);
+    }
+    return true;
   }
 
   Future<bool> verifyOtp({
