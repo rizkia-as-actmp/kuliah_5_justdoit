@@ -76,7 +76,7 @@ class _MarkListBody extends StatelessWidget {
         onPressed: () {
           Navigator.pushNamed(
             context,
-            '/markdown-editor',
+            '/mark-editor',
           );
         },
         child:

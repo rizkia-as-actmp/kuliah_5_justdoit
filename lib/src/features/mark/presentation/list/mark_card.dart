@@ -21,11 +21,10 @@ class MarkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(markId);
     return GestureDetector(
       // https://stackoverflow.com/questions/49959617/flutter-how-do-you-make-a-card-clickable
       onTap: () {
-        Navigator.pushNamed(context, '/markdown-viewer',
+        Navigator.pushNamed(context, '/mark-viewer',
             arguments: {'markId': markId});
       },
       child: Card.filled(

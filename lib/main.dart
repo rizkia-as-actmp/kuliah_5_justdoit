@@ -9,7 +9,9 @@ import 'package:justdoit/src/common_widgets/splash_screen.dart';
 import 'package:justdoit/src/constants/colors.dart';
 import 'package:justdoit/src/features/authentication/presentation/login/login_user_screen.dart';
 import 'package:justdoit/src/features/authentication/presentation/register/register_complete_screen.dart';
+import 'package:justdoit/src/features/mark/presentation/editor/mark_editor_screen.dart';
 import 'package:justdoit/src/features/mark/presentation/list/mark_list_screen.dart';
+import 'package:justdoit/src/features/mark/presentation/viewer/mark_viewer.dart';
 
 void main() {
   //Untuk membuat widget dapat membaca provider, kita perlu membungkus seluruh aplikasi dengan widget "ProviderScope". Di sinilah state dari provider kita disimpan.
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SplashScreen(),
         '/mark-list': (context) => const MarkListScreen(),
+        '/mark-viewer': (context) => const MarkViewerScreen(),
+        '/mark-editor': (context) => const MarkEditorScreen(),
         '/user-password-reset': (context) => const PasswordResetScreen(),
         '/register-user': (context) => const RegisterUserScreen(),
         '/login': (context) => const LoginUserScreen(),

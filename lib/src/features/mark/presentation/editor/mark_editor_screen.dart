@@ -135,7 +135,7 @@ class _MarkEditorBodyState extends ConsumerState<_MarkEditorBody> {
     }
 
     (markId != null)
-        ? Navigator.pushReplacementNamed(context, '/markdown-viewer',
+        ? Navigator.pushReplacementNamed(context, '/mark-viewer',
             arguments: {'markId': markId!})
         : Navigator.pop(context);
   }

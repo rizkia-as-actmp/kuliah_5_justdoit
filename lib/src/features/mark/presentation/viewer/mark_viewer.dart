@@ -109,7 +109,7 @@ class _MarkViewerBodyState extends ConsumerState<_MarkViewerBody> {
           mediumHSizedBox,
           IconButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/markdown-editor',
+                Navigator.pushReplacementNamed(context, '/mark-editor',
                     arguments: {'markId': widget.mark.id!});
               },
               icon: Icon(Icons.edit_outlined)),

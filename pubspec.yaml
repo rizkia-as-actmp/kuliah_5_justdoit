@@ -41,6 +41,8 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_secure_storage: ^9.2.2
   shared_preferences: ^2.3.3
+  flutter_markdown: ^0.7.4+3
+  markdown_toolbar: ^0.5.0
 
 dev_dependencies:
   # flutter_test:
