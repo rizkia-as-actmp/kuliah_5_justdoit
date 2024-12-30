@@ -7,6 +7,7 @@ abstract interface class HttpAuthRepository implements HttpRepository {
   Future<PbAuth> authWithPassword(String email, String password);
   Future<PbAuth> verifyOtp(String otpId, String otp);
   Future<void> requestVerification(String email);
+  Future<String> requestPasswordReset(String email);
   //Future<void> logoutUser();
   //Future<void> resetPassword(String email);
   //Future<void> changePassword(String oldPassword, String newPassword);

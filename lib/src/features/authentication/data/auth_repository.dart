@@ -63,6 +63,24 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
   }
 
   @override
+  Future<String> requestPasswordReset(String email) async {
+    try {
+      Object data = {
+        'email': email,
+      };
+      return await sendRequest<String>(
+        uri: uriBuilder.api("collections/users/request-password-reset"),
+        method: "POST",
+        body: data,
+        builder: (responseData) => responseData["token"],
+      );
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "c4bb1522", details: e);
+    }
+  }
+
+  @override
   Future<void> requestVerification(String email) async {
     try {
       Object data = {'email': email};
@@ -111,30 +129,33 @@ class PocketbaseAuthRepository implements HttpAuthRepository {
           response = await http.get(uri);
         case "POST":
           response = await http.post(uri, body: body);
+        case "PATCH":
+          response = await http.patch(uri, body: body);
+        case "DELETE":
+          response = await http.delete(uri);
         default:
           throw CustomException(
-              id: "20edecdd", message: "Method: $method not defined");
+              id: "40acfb2e", message: "Method: $method not defined");
       }
 
-      if (builder != null) {
-        final dynamic data;
-        switch (response.statusCode) {
-          case 200:
-            data = jsonDecode(response.body) as Map<String, dynamic>;
-            return builder(data);
-          default:
-            data = jsonDecode(response.body) as Map<String, dynamic>;
-            throw CustomException(
-                id: "d267e93f",
-                httpResponseCode: response.statusCode.toString(),
-                message: data["message"],
-                details: data["data"]);
-        }
+      final dynamic data;
+      switch (response.statusCode) {
+        case 200:
+          data = jsonDecode(response.body) as Map<String, dynamic>;
+          return builder!(data);
+        case 204:
+          return null as T;
+        default:
+          data = jsonDecode(response.body) as Map<String, dynamic>;
+          throw CustomException(
+              id: "e46ba4ed",
+              httpResponseCode: response.statusCode.toString(),
+              message: data["message"],
+              details: data["data"]);
       }
-      return null as T;
     } catch (e) {
       if (e is CustomException) rethrow;
-      throw CustomException(id: "ca06c78b", details: e);
+      throw CustomException(id: "2085905e", details: e);
     }
   }
 }

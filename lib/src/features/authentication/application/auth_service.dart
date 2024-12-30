@@ -54,6 +54,18 @@ class AuthService extends _$AuthService {
     }
   }
 
+  Future<String> requestPasswordReset({required String email}) async {
+    try {
+      final token =
+          await ref.read(authRepositoryProvider).requestPasswordReset(email);
+      return token;
+      //await ref .read(authProvider.notifier) .refresh(); // TODO: setelah buath flutter secure storage
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "39d0fb16", details: e);
+    }
+  }
+
   Future<bool> verifyOtp({
     required String otp,
   }) async {
