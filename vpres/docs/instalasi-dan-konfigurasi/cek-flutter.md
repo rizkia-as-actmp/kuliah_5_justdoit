@@ -11,7 +11,7 @@ Berikut adalah command untuk memeriksa instalasi Flutter dengan `flutter doctor`
 ```shell
 flutter doctor
 ```
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/assets/1734337901791.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/1734337901791.jpg" width="600">
 
 Terdapat satu error karena saya tidak menginstall Chrome pada sistem saya dan juga satu warning karena saya belum menginstall Android Studio, saya akan mengabaikannya untuk sekarang karena sejauh ini saya belum membutuhkan kedua hal tersebut.
 
@@ -29,7 +29,7 @@ Berikut langkah-langkah untuk mencoba generate dan menjalankan aplikasi Flutter:
    ```shell
    flutter create tes_flutter 
    ```
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/assets/1734339198766.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/1734339198766.jpg" width="600">
 
 Setelah itu saya test running program yang tadi telah digenerate
 
@@ -47,7 +47,7 @@ Setelah itu saya test running program yang tadi telah digenerate
    ```shell
    flutter run
    ```
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/assets/1734339213646.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/1734339213646.jpg" width="600">
 
 Bisa kita lihat bahwa instalasi flutter telah berhasil, program yang dibuat juga bisa dijalankan
 
