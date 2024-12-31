@@ -17,15 +17,23 @@ curl -LO https://github.com/pocketbase/pocketbase/releases/download/v0.23.8/pock
 unzip pocketbase_0.23.8_linux_amd64.zip
 
 ```
-Berikut adalah command untuk menginstal Flutter SDK dari AUR:
-
+Setelah mendownload dan menekstrak binary pocketbase. kita bisa langsung jalankan pocketbase dengan comman berikut:
 ```shell
-yay -Sy flutter
+./pocketbase serve
 ```
+berikut adalah yang terlihat pada terminal emulator ketika kita running command diatas. 
+```shell
+rizkia@rizkia-eos-lnx 00:33:47
+pb editor $ ./pocketbase serve
+2025/01/01 01:40:12 Server started at http://127.0.0.1:8090
+├─ REST API:  http://127.0.0.1:8090/api/
+└─ Dashboard: http://127.0.0.1:8090/_/
 
-:::info :bulb: **Catatan:**  
-Ketika kita menginstal Flutter SDK menggunakan `yay`, secara otomatis akan terinstal **JDK** juga. Saat proses instalasi, kita akan diminta memilih versi JDK yang akan digunakan. :shield:
-:::
+```
+Dari hasil diatas kita mendapatkan beberapa informasi yaitu
+- Untuk akses admin dashboard : http://127.0.0.1:8090/_/
+- URL REST API yang bisa kita gunakan pada aplikasi atau postman : http://127.0.0.1:8090/api/
+
 
 <img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/1734326167427.jpg" width="600">
 
@@ -34,4 +42,3 @@ Selain JDK, `yay` juga akan meminta izin kita untuk menginstal **dependencies** 
 <img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/20241216122701.jpg" width="600">
 
 <img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/20241216123126.jpg" width="600">
-
