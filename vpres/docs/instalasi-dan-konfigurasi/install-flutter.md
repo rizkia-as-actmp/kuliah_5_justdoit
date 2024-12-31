@@ -18,11 +18,11 @@ yay -Sy flutter
 Ketika kita menginstal Flutter SDK menggunakan `yay`, secara otomatis akan terinstal **JDK** juga. Saat proses instalasi, kita akan diminta memilih versi JDK yang akan digunakan. :shield:
 :::
 
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/1734326167427.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/1734326167427.jpg" width="600">
 
 Selain JDK, `yay` juga akan meminta izin kita untuk menginstal **dependencies** lainnya yang dibutuhkan oleh Flutter SDK. :package: Di sini kita hanya perlu mengonfirmasi saja. Berikut adalah dependencies yang akan diinstal dan membutuhkan konfirmasi dari kita. ✅
 
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/20241216122701.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/20241216122701.jpg" width="600">
 
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/20241216123126.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/20241216123126.jpg" width="600">
 
