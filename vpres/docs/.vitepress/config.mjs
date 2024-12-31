@@ -6,7 +6,7 @@ export default defineConfig({
  //   // Vite config options
  // },
   base: '/kuliah_5_justdoit/',
-  //outDir: '../../../docs/i',
+  //outDir: '../../../docs/',
 
   title: "MWSP / EXPLORASI",
   description: "Mobile and Web Service Praktik",
