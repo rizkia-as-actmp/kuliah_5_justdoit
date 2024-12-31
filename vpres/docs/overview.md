@@ -13,15 +13,15 @@ Berikut adalah teknologi yang saya gunakan dalam membangun project ini:
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
   <Card
         title="Flutter"
-        to="/#flutter"
+        to="#flutter"
       />
   <Card
         title="Riverpod"
-        to="/#riverpod"
+        to="#riverpod"
       />
   <Card
         title="Pocketbase"
-        to="/#pocketbase"
+        to="#pocketbase"
       />
 </div>
 

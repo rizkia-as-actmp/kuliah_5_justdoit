@@ -21,5 +21,5 @@ yay -Sy android-sdk android-sdk-build-tools android-sdk-cmdline-tools-latest and
 Sama seperti sebelumnya, `yay` akan menginstal Android SDK sekaligus dependencies yang diperlukan. Di sini kita hanya perlu memberikan konfirmasi saja. :white_check_mark:
 :::
 
-<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/docs/resources/1734328213010.jpg" width="600">
+<img src="https://raw.githubusercontent.com/rizkia-as-actmp/kuliah_5_justdoit/refs/heads/main/public/1734328213010.jpg" width="600">
 

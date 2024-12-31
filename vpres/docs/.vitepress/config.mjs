@@ -2,11 +2,11 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
- // vite: {
- //   // Vite config options
- // },
+  // vite: {
+  //   // Vite config options
+  // },
   base: '/kuliah_5_justdoit/',
-  //outDir: '../../../docs/',
+  outDir: '../../docs/', // rootnya adalah directory docs yang didalamnya ada isi .vitepress
 
   title: "MWSP / EXPLORASI",
   description: "Mobile and Web Service Praktik",
@@ -30,7 +30,7 @@ export default defineConfig({
       },
       {
         text: 'Bab 1 Instalasi dan Konfigurasi',
-        collapsed:true,
+        collapsed: true,
         items: [
           { text: 'Install Flutter', link: '/instalasi-dan-konfigurasi/install-flutter' },
           { text: 'Install Android SDK', link: '/instalasi-dan-konfigurasi/install-android-sdk' },
@@ -41,7 +41,7 @@ export default defineConfig({
       },
       {
         text: 'Bab 2 Pocketbase',
-        collapsed:true,
+        collapsed: true,
         items: [
           { text: 'Instalasi', link: '/pocketbase/install-pocketbase' },
         ]
