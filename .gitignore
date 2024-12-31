@@ -26,6 +26,9 @@ pb/*
 !pb/pb_hooks
 !pb/Makefile
 
+vpres/node_modules
+vpres/docs/.vitepress/cache
+
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
