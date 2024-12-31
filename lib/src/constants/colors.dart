@@ -5,6 +5,7 @@ class DefinedTheme {
   static const Color onBackground = Color(0xFF314748);
   static const Color primary = Color(0xFF719191);
   static const Color primary50 = Color(0xFFE9F0F0);
+  static const Color primary100 = Color(0xFFCCD9D8);
   static const Color onPrimary = Color(0xFFFFFFFF);
   static const Color secondary = Color(0xFF917191);
   static const Color onSecondary = Color(0xFFFFFFFF);

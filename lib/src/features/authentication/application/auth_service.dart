@@ -1,4 +1,6 @@
+import 'package:justdoit/src/features/authentication/application/auth_providers.dart';
 import 'package:justdoit/src/features/authentication/data/auth_repository.dart';
+import 'package:justdoit/src/features/authentication/data/secure_storage_repository.dart';
 import 'package:justdoit/src/features/authentication/data/shared_preferences_repository.dart';
 import 'package:justdoit/src/exceptions/custom_exception.dart';
 import 'package:justdoit/src/features/authentication/domain/user.dart';
@@ -54,18 +56,65 @@ class AuthService extends _$AuthService {
     }
   }
 
+  Future<String> requestPasswordReset({required String email}) async {
+    try {
+      final token =
+          await ref.read(authRepositoryProvider).requestPasswordReset(email);
+      return token;
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "39d0fb16", details: e);
+    }
+  }
+
+  Future<bool> confirmPasswordReset({
+    required String token,
+    required String oldPassword,
+    required String newPassword,
+    required String newPasswordConfirm,
+  }) async {
+    try {
+      await ref.read(authRepositoryProvider).confirmPasswordReset(
+          token, oldPassword, newPassword, newPasswordConfirm);
+
+      await logOut();
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "fae3aa4f", details: e);
+    }
+    return true;
+  }
+
   Future<bool> verifyOtp({
     required String otp,
   }) async {
     try {
       final otpId =
           ref.read(otpIdSharedPrefRepositoryProvider.notifier).readData();
-      final auth = await ref.read(authRepositoryProvider).verifyOtp(otpId, otp);
+      final authToken =
+          await ref.read(authRepositoryProvider).verifyOtp(otpId, otp);
+      await ref
+          .read(pbAuthTokenSecureStorageRepositoryProvider.notifier)
+          .writeData(authToken);
+      await ref.read(authProvider.notifier).refresh();
     } catch (e) {
       if (e is CustomException) rethrow;
       throw CustomException(id: "f6ad0590", details: e);
     }
 
+    return true;
+  }
+
+  Future<bool> logOut() async {
+    try {
+      await ref
+          .read(pbAuthTokenSecureStorageRepositoryProvider.notifier)
+          .deleteData();
+      await ref.read(authProvider.notifier).refresh();
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(id: "be3aa6dc", details: e);
+    }
     return true;
   }
 }

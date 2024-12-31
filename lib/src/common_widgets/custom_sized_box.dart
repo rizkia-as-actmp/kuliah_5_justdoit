@@ -29,6 +29,7 @@ import 'package:justdoit/src/constants/sizes.dart';
 // const gapW64 = SizedBox(width: Sizes.p64);
 //
 /// Constant gap heights
+const extraSmallHSizedBox = SizedBox(width: DefinedSize.extraSmall);
 const smallHSizedBox = SizedBox(width: DefinedSize.small);
 const mediumHSizedBox = SizedBox(width: DefinedSize.medium);
 const bigHSizedBox = SizedBox(width: DefinedSize.big);

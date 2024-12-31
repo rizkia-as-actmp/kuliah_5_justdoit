@@ -99,7 +99,8 @@ class _AlertDialog extends StatelessWidget {
         ),
       ),
       contentTextStyle: TextStyle(color: DefinedTheme.black),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(DefinedSize.extraSmall)),
       actions: <Widget>[
         CustomWideButton(
           labelText: "Dismiss",

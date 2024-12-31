@@ -11,8 +11,9 @@ class PocketbaseApiUriBuilder implements ApiUriBuilder {
   @override
   Uri api(String endpoint) => _buildUri(pathPrefix: "api", endpoint: endpoint);
 
-  // Uri extendApi(String endpoint) =>
-  //    _buildUri(pathPrefix: "extend", endpoint: endpoint);
+  @override
+  Uri extendApi(String endpoint) =>
+      _buildUri(pathPrefix: "extend/api", endpoint: endpoint);
 
   Uri _buildUri({
     required String pathPrefix,
