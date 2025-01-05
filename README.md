@@ -1,4 +1,5 @@
-# justdoit
+# justdoit (Deprecated)
+# Sekarang diberi nama MarkDawg
 
 A new Flutter project.
 
