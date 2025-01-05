@@ -8,8 +8,11 @@ hero:
   tagline: "By Rizkia Adhy Syahputra \nNIM: 5220411051" 
   actions:
     - theme: brand
-      text: Mulai explorasi
-      link: /markdown-examples
+      text: Dokumentasi
+      link: /overview.md
+    - theme: alt 
+      text: Source Code (Github repo)
+      link: https://github.com/rizkia-as-actmp/kuliah_5_justdoit/tree/main
 
 features:
   - title: Flutter
